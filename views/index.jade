@@ -9,6 +9,8 @@ block content
         p You are currently logged in as #{user.username}
         a(href="/logout") Logout
 
-    form#file_upload(name="file_upload", method="POST", action="/upload", enctype="multipart/form-data")
-        input#userInputFile(type="file", name="file")
-        button(type="submit") Upload
+        form#file_upload(name="file_upload", method="POST", action="/upload", enctype="multipart/form-data")
+            input#userInputFile(type="file", name="file")
+            button(type="submit") Upload
+
+    include feed

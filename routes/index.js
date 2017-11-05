@@ -9,7 +9,7 @@ var fs = require('fs');
 var multer = require('multer');
 // TODO: Настраивать multer в отдельном модуле и экспортировать в ./routes/index.js
 
-var upload = multer({dest: './uploads'});
+var upload = multer({dest: 'D:\\Projects\\untitled\\uploads\\'});
 
 var db = require('../db');
 
@@ -70,8 +70,7 @@ router.get('/ping', function(req, res){
 });
 
 router.post('/upload', upload.single('file'), function(req, res){
-    console.log('FIRST TEST: ' + JSON.stringify(req.file));
-    console.log('second TEST: ' +req.file.originalname);
+    console.log('TEST: ' +req.file.filename);
 
     var dirname = require('path').dirname(__dirname);
     var filename = req.file.originalname;
@@ -82,31 +81,26 @@ router.post('/upload', upload.single('file'), function(req, res){
         filename: filename
     });
 
+    // pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
     fs.createReadStream("./uploads/" + req.file.filename)
-        .on("end", function(){fs.unlink("./uploads/"+ req.file.filename, function(err){res.send("success")})})
-        .on("err", function(){res.send("Error uploading image")})
+        .on("end", function(){
+            fs.unlink("./uploads/"+ req.file.filename, function(err){
+                res.send("success")
+            })
+        })
+        .on("err", function(){
+            res.send("Error uploading image")
+        })
         .pipe(write_stream);
-    
+
 });
 
-router.get('/file/:id', function(req, res){
-    var pic_id = req.param('id');
-    var gfs = req.gfs;
-
-    gfs.files.find({filename: pic_id}).toArray(function (err, files) {
-
-        if (err) {
-            res.json(err);
-        }
-        if (files.length > 0) {
-            var mime = 'image/jpeg';
-            res.set('Content-Type', mime);
-            var read_stream = gfs.createReadStream({filename: pic_id});
-            read_stream.pipe(res);
-        } else {
-            res.json('File Not Found');
-        }
+router.get('/:filename', function(req, res){
+    var read_stream = gfs.createReadStream({filename: req.params.filename});
+    read_stream.on("error", function(err){
+        res.send("No image found with that title");
     });
+    read_stream.pipe(res);
 });
 
 module.exports = router;
