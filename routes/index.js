@@ -24,31 +24,10 @@ var Image = mongoose.model("Image",
 );
 
 db.once("open", function(){
-
-
-    // var img_schema = new Schema({name: String}, {versionKey: false});
-
-    // var img = mongoose.model("fs.files", img_schema);
-
-    /* img.find({}, {'_id': 0, 'filename': 1}, function(err, docs){
-        mongoose.disconnect();
-
-        if(err) return console.log(err);
-
-        var result = "";
-
-        for (var i = 0; i < docs.length; i++) {
-            result += docs[i].toObject().filename;
-            result += " ";
-        }
-        console.log(result);
-    }); */
-
     gfs = Grid(db.db);
 });
 
 router.get('/', function (req, res) {
-
     Image.find()
         .then((docs) =>{
             var imageNames = docs.map((e) => {
@@ -56,20 +35,10 @@ router.get('/', function (req, res) {
             })
             res.render("index", {
                 imageNames,
-                user : req.user,
-                lalki : "LOL"
+                user : req.user
             })
             console.log(imageNames)
         });
-
-    // TODO: Попробовать передавать в index.jade имена файлов в качестве параметров?
-    // Возможно, идёт какой-то конфликт, связанный с попыткой доступа к изображениям одновременно
-    // отсюда и по URL из шаблона.
-    // Но если мы перемещаем запрос на имена файлов в db.once("open", ), это не помогает: имена
-    // получаем успешно, а картинки не грузятся.
-    // Возможно, это потому, что db.once("open", ) отрабатывает на попытке добыть картинки.
-    // res.render('index', { user : req.user, lalki : "LOL" });
-
 });
 
 router.get('/register', function(req, res) {
@@ -118,15 +87,16 @@ router.get('/ping', function(req, res){
 });
 
 router.post('/upload', upload.single('file'), function(req, res){
-    console.log('TEST: ' +req.file.filename);
+    console.log('UPLOADING: ' + JSON.stringify(req.body.tag));
 
-    var dirname = require('path').dirname(__dirname);
     var filename = req.file.originalname;
-    var path = req.file.path;
-    var type = req.file.mimetype;
+    var tag = req.body.tag;
 
     var write_stream = gfs.createWriteStream({
-        filename: filename
+        filename: filename,
+        metadata: {
+            tag: tag
+        }
     });
 
     // pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.

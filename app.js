@@ -5,13 +5,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-// var mongoose = require('mongoose');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
 
 var app = express();
 
@@ -84,5 +82,3 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 
-// Если писать так, то в ../bin/www.js не получается стандартно вытащить app
-// module.exports.app = app;
