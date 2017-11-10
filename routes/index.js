@@ -22,7 +22,29 @@ db.once("open", function(){
 });
 
 router.get('/', function (req, res) {
-    res.render('index', { user : req.user });
+
+    var Schema = mongoose.Schema;
+    var img_schema = new Schema({name: String, age: Number}, {versionKey: false});
+
+    var img = mongoose.model("fs.files", img_schema);
+
+    img.find({}, {'_id': 0, 'filename': 1}, function(err, docs){
+        mongoose.disconnect();
+
+        if(err) return console.log(err);
+
+        var result = "";
+
+        for (var i = 0; i < docs.length; i++) {
+            result += docs[i].toObject().filename;
+            result += " ";
+        }
+        console.log(result);
+    });
+
+    // TODO: Попробовать передавать в index.jade имена файлов в качестве параметров
+    res.render('index', { user : req.user, lalki : "LOL" });
+
 });
 
 router.get('/register', function(req, res) {
