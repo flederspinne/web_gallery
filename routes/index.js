@@ -143,13 +143,13 @@ router.post('/upload', upload.single('file'), function(req, res){
 
 });
 
-/* router.get('/:filename', function(req, res){
+router.get('/:filename', function(req, res){
     console.log("Тянем картинушку по URL: " + JSON.stringify(req.params))
     var read_stream = gfs.createReadStream({filename: req.params.filename});
     read_stream.on("error", function(err){
         res.send("No image found with that title");
     });
     read_stream.pipe(res);
-}); */
+});
 
 module.exports = router;
