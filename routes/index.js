@@ -19,9 +19,7 @@ Grid.mongo = mongoose.mongo;
 var Schema = mongoose.Schema;
 var Image = mongoose.model("Image",
     new Schema({
-        filename : String,
-        contentType : String,
-        uploadDate : Date
+        filename : String
     }),
     "fs.files"
 );
@@ -50,7 +48,7 @@ router.get('/register', function(req, res) {
 });
 
 router.post('/register', function(req, res, next) {
-    console.log("BODY: " + JSON.stringify(req.body));
+    console.log("Регистрация пользователя: " + JSON.stringify(req.body));
     Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
         if (err) {
             return res.render('register', { error : err.message });
@@ -85,11 +83,14 @@ router.get('/logout', function(req, res) {
 });
 
 router.post('/search', function(req, res){
-    console.log('SEARCHING: ' + JSON.stringify(req.body));
 
-    var tag = req.body.search_tag;
+    console.log('Идёт поиск по тегам: ' + JSON.stringify(req.body.search_tag));
+    // Получаем введённые пользователем теги в виде строки
+    var tag = req.body.search_tag.toString();
+    // Разбиваем на элементы массива
+    var tag_array = tag.split(" ");
 
-    Image.find({'metadata.tag': tag})
+    Image.find({'metadata.tag': { $all: tag_array }})
         .then((docs) =>{
             var imageNames = docs.map((e) => {
                 return e.filename
@@ -103,6 +104,7 @@ router.post('/search', function(req, res){
 });
 
 router.post('/upload', upload.single('file'), function(req, res){
+
     console.log("Загружаем изображение: " + JSON.stringify(req.file) +
         "\nДобавляемые теги: " + JSON.stringify(req.body.tag));
 
@@ -124,7 +126,8 @@ router.post('/upload', upload.single('file'), function(req, res){
     fs.createReadStream("./uploads/" + req.file.filename)
         .on("end", function(){
             fs.unlink("./uploads/"+ req.file.filename, function(err){
-                res.send("success")
+                // TODO: Выводить что-то типа "Файл успешно загружен"
+                res.redirect('/');
             })
         })
         .on("err", function(){
@@ -134,6 +137,7 @@ router.post('/upload', upload.single('file'), function(req, res){
 });
 
 router.get('/:filename', function(req, res){
+
     console.log("Получаем изображение по URL: /" + req.params.filename);
     var read_stream = gfs.createReadStream({filename: req.params.filename});
     read_stream.on("error", function(err){
