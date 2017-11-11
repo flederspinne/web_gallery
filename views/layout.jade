@@ -3,6 +3,7 @@ html
     head
         title= title
         meta(name='viewport', content='width=device-width, initial-scale=1.0')
+        script(type='text/javascript' src='/javascripts/jquery-min.js')
         link(rel='stylesheet', href='/stylesheets/style.css')
     body
         if (error && error.length > 0)
@@ -10,7 +11,12 @@ html
             h4.error-msg= error
             br
 
-        h1 Web_Gallery
+        h1#main_title Web_Gallery
+
+        script.
+            $("#main_title").click(function () {
+                alert("YO");
+            });
 
         block content
 
