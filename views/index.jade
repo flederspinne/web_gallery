@@ -1,6 +1,13 @@
 extends layout
 
 block content
+
+    p Поиск по тегу:
+    form#tag_search(name="tag_search", method="POST", action="/search")
+        input#input_search_tag(type="text", name="search_tag")
+        button(type="submit") Показать
+
+
     if (!user)
         a(href="/login") Login
         br

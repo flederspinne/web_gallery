@@ -2,24 +2,28 @@ var express = require('express');
 var passport = require('passport');
 var Account = require('../models/account');
 var router = express.Router();
+
+// Модули для работы с БД:
 var mongoose = require('mongoose');
-
-
 var fs = require('fs');
 var multer = require('multer');
-// TODO: Настраивать multer в отдельном модуле и экспортировать в ./routes/index.js
-
 var upload = multer({dest: 'D:\\Projects\\untitled\\uploads\\'});
-
 var db = require('../db');
 
 var gfs;
 var Grid = require("gridfs-stream");
 Grid.mongo = mongoose.mongo;
 
+// TODO: Выделить схему картинки в отдельную модель
+// TODO: Что это вообще за схема такая, и как подцепить метаданные?
 var Schema = mongoose.Schema;
 var Image = mongoose.model("Image",
-    new Schema({filename : String, contentType : String, uploadDate : Date}),
+    new Schema({
+        filename : String,
+        contentType : String,
+        uploadDate : Date,
+        tag: String
+    }),
     "fs.files"
 );
 
@@ -37,7 +41,7 @@ router.get('/', function (req, res) {
                 imageNames,
                 user : req.user
             })
-            console.log(imageNames)
+            console.log(docs)
         });
 });
 
@@ -86,11 +90,31 @@ router.get('/ping', function(req, res){
     res.status(200).send("pong!");
 });
 
+router.post('/search', function(req, res){
+    console.log('SEARCHING: ' + JSON.stringify(req.body));
+
+    var tag = req.body.search_tag;
+
+    Image.find({'metadata.tag': tag})
+        .then((docs) =>{
+            var imageNames = docs.map((e) => {
+                return e.filename
+            })
+            res.render("index", {
+                imageNames,
+                user : req.user
+            })
+            console.log(imageNames)
+        });
+});
+
 router.post('/upload', upload.single('file'), function(req, res){
     console.log('UPLOADING: ' + JSON.stringify(req.body.tag));
 
     var filename = req.file.originalname;
     var tag = req.body.tag;
+
+    // TODO: Введённые через запятую теги разбивать и запихивать в объект
 
     var write_stream = gfs.createWriteStream({
         filename: filename,
