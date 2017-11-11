@@ -110,7 +110,8 @@ router.post('/upload', upload.single('file'), function(req, res){
     var write_stream = gfs.createWriteStream({
         filename: filename,
         metadata: {
-            tag: tag_array
+            tag: tag_array,
+            author: req.user.username
         }
     });
 
