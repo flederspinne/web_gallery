@@ -1,6 +1,7 @@
 var express = require('express');
 var passport = require('passport');
 var Account = require('../models/account');
+var Image = require('../models/image');
 var router = express.Router();
 
 // Модули для работы с БД:
@@ -13,16 +14,6 @@ var db = require('../db');
 var gfs;
 var Grid = require("gridfs-stream");
 Grid.mongo = mongoose.mongo;
-
-// TODO: Выделить схему картинки в отдельную модель
-// TODO: Что это вообще за схема такая, и как подцепить метаданные?
-var Schema = mongoose.Schema;
-var Image = mongoose.model("Image",
-    new Schema({
-        filename : String
-    }),
-    "fs.files"
-);
 
 db.once("open", function(){
     gfs = Grid(db.db);
