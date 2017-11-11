@@ -21,8 +21,7 @@ var Image = mongoose.model("Image",
     new Schema({
         filename : String,
         contentType : String,
-        uploadDate : Date,
-        tag: String
+        uploadDate : Date
     }),
     "fs.files"
 );
@@ -75,7 +74,6 @@ router.get('/login', function(req, res) {
 });
 
 // Вход в аккаунт
-// !!! Если убрать глобальное использование body-parser, passport не работает !!!
 router.post('/login', passport.authenticate('local'), function(req, res) {
     console.log("Пытаемся войти: " + JSON.stringify(req.body));
     res.redirect('/');
@@ -84,10 +82,6 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
 router.get('/logout', function(req, res) {
     req.logout();
     res.redirect('/');
-});
-
-router.get('/ping', function(req, res){
-    res.status(200).send("pong!");
 });
 
 router.post('/search', function(req, res){
@@ -109,21 +103,24 @@ router.post('/search', function(req, res){
 });
 
 router.post('/upload', upload.single('file'), function(req, res){
-    console.log('UPLOADING: ' + JSON.stringify(req.body.tag));
+    console.log("Загружаем изображение: " + JSON.stringify(req.file) +
+        "\nДобавляемые теги: " + JSON.stringify(req.body.tag));
 
     var filename = req.file.originalname;
-    var tag = req.body.tag;
-
-    // TODO: Введённые через запятую теги разбивать и запихивать в объект
+    // Получаем добавленные пользователем теги в виде строки
+    var tag = req.body.tag.toString();
+    // Удаляем пробелы
+    tag = tag.replace(/\s+/g, '');
+    // Разбиваем на элементы массива
+    var tag_array = tag.split(",");
 
     var write_stream = gfs.createWriteStream({
         filename: filename,
         metadata: {
-            tag: tag
+            tag: tag_array
         }
     });
 
-    // pipe multer's temp file /uploads/filename into the stream we created above. On end deletes the temporary file.
     fs.createReadStream("./uploads/" + req.file.filename)
         .on("end", function(){
             fs.unlink("./uploads/"+ req.file.filename, function(err){
@@ -134,14 +131,14 @@ router.post('/upload', upload.single('file'), function(req, res){
             res.send("Error uploading image")
         })
         .pipe(write_stream);
-
 });
 
 router.get('/:filename', function(req, res){
-    console.log("Тянем картинушку по URL: " + JSON.stringify(req.params))
+    console.log("Получаем изображение по URL: /" + req.params.filename);
     var read_stream = gfs.createReadStream({filename: req.params.filename});
     read_stream.on("error", function(err){
-        res.send("No image found with that title");
+        console.log("Ошибка! Изображение с именем " + req.params.filename + " не найдено.");
+        res.send("Ошибка! Изображение с именем " + req.params.filename + " не найдено.");
     });
     read_stream.pipe(res);
 });
