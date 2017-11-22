@@ -32,6 +32,10 @@ a {
 .masonry .img_item {
     background-color: #eee;
     display: inline-block;
+    width: 100%;
+}
+
+.masonry .img_item .img {
     margin-bottom: -5px;
     width: 100%;
 }
