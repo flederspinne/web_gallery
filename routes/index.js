@@ -140,4 +140,8 @@ router.get('/:id', function(req, res){
     read_stream.pipe(res);
 });
 
+router.post('/like', function(req, res){
+    console.log("Лайкнем " + req.params.id);
+});
+
 module.exports = router;

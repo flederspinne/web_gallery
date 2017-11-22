@@ -3,7 +3,9 @@
         .img_item
             .img_data_top
                 | #{val.likes}
-                a(href='/like:' + val.filename) &#x2764;
+                // Если убрать одинарные кавычки из параметра, передаваемого в post_like, ничего работать не будет!
+                a#like_button.like_button(onclick="post_like('" + val.id + "');") &#x2764;
             img(src="/" + val.id alt=val.filename title=val.filename class="img")
             .img_data_bottom
                 | #{val.filename} by #{val.author} [#{val.tag}]
+

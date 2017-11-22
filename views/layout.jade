@@ -4,6 +4,7 @@ html
         title= title
         meta(name='viewport', content='width=device-width, initial-scale=1.0')
         script(type='text/javascript' src='/javascripts/jquery-min.js')
+        script(type='text/javascript' src='/javascripts/functions.js')
         link(rel='stylesheet', href='/stylesheets/reset.css')
         link(rel='stylesheet', href='/stylesheets/style.css')
     body
@@ -15,18 +16,6 @@ html
         #header.header
             a(href="/")#main_title Web_Gallery
             block header
-
-        //
-            script(type='text/javascript').
-                jQuery(function($) {
-                    $(window).scroll(function(){
-                        if($(this).scrollTop() > 100){
-                            $("#header").addClass("fixed");
-                        } else if ($(this).scrollTop() < 100){
-                            $("#header").removeClass("fixed");
-                        }
-                    });
-                });
 
         #content.content
             block content
