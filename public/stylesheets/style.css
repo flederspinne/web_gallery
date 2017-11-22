@@ -32,10 +32,39 @@ a {
 .masonry .img_item {
     background-color: #eee;
     display: inline-block;
+    height: 100%;
     width: 100%;
 }
 
-.masonry .img_item .img {
-    margin-bottom: -5px;
+.masonry .img_item:hover {
+    /* filter: blur(10px);
+    transform: scale(1.1, 1.1); */
+    cursor: zoom-in;
+    filter: brightness(0.9);
+}
+
+.masonry .img_item .img_data_top {
+    background: rgba(178, 235, 242, 0.5);
+    border: 1px solid #00BCD4;
+    height: 100px;
+    position: relative;
     width: 100%;
+    z-index: 20;
+}
+
+.masonry .img_item .img {
+    margin: -100px 0 -5px 0;
+    position: relative;
+    width: 100%;
+    z-index: 0;
+}
+
+.masonry .img_item .img_data_bottom {
+    background: rgba(255, 204, 188, 0.5);
+    border: 1px solid #FF5722;
+    height: 100px;
+    margin-top: -100px;
+    position: relative;
+    width: 100%;
+    z-index: 10;
 }
