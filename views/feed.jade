@@ -2,7 +2,8 @@
     each val in image_arr
         .img_item
             .img_data_top
-                | Я задолбалась
-            img(src="/" + val.filename alt=val.filename title=val.filename class="img")
+                | #{val.likes}
+                a(href='/like:' + val.filename) &#x2764;
+            img(src="/" + val.id alt=val.filename title=val.filename class="img")
             .img_data_bottom
-                | #{val.filename} by #{val.author} [#{val.tag}] #{val.likes} likes
+                | #{val.filename} by #{val.author} [#{val.tag}]

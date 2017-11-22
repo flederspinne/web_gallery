@@ -129,13 +129,13 @@ router.post('/upload', upload.single('file'), function(req, res){
         .pipe(write_stream);
 });
 
-router.get('/:filename', function(req, res){
+router.get('/:id', function(req, res){
 
-    console.log("Получаем изображение по URL: /" + req.params.filename);
-    var read_stream = gfs.createReadStream({filename: req.params.filename});
+    console.log("Получаем изображение по URL: /" + req.params.id);
+    var read_stream = gfs.createReadStream({_id: req.params.id});
     read_stream.on("error", function(err){
-        console.log("Ошибка! Изображение с именем " + req.params.filename + " не найдено.");
-        res.send("Ошибка! Изображение с именем " + req.params.filename + " не найдено.");
+        console.log("Ошибка! Изображение с id " + req.params.id + " не найдено.");
+        res.send("Ошибка! Изображение с id " + req.params.id + " не найдено.");
     });
     read_stream.pipe(res);
 });
