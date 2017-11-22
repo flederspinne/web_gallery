@@ -4,6 +4,7 @@ html
         title= title
         meta(name='viewport', content='width=device-width, initial-scale=1.0')
         script(type='text/javascript' src='/javascripts/jquery-min.js')
+        link(rel='stylesheet', href='/stylesheets/reset.css')
         link(rel='stylesheet', href='/stylesheets/style.css')
     body
         if (error && error.length > 0)
@@ -11,12 +12,22 @@ html
             h4.error-msg= error
             br
 
-        h1#main_title Web_Gallery
+        #header.header
+            a(href="/")#main_title Web_Gallery
+            block header
 
-        script.
-            $("#main_title").click(function () {
-                alert("YO");
-            });
+        //
+            script(type='text/javascript').
+                jQuery(function($) {
+                    $(window).scroll(function(){
+                        if($(this).scrollTop() > 100){
+                            $("#header").addClass("fixed");
+                        } else if ($(this).scrollTop() < 100){
+                            $("#header").removeClass("fixed");
+                        }
+                    });
+                });
 
-        block content
+        #content.content
+            block content
 

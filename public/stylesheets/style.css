@@ -1,8 +1,23 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    font: 18px sans-serif;
+    font-weight: bold;
 }
 
 a {
-  color: #00B7FF;
+    color: #424242;
+}
+
+.header {
+    background: #C8E6C9;
+    height: 100px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+.content {
+    position: absolute;
+    top: 100px;
+    z-index: 0;
 }

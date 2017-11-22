@@ -24,17 +24,16 @@ router.get('/', function (req, res) {
         .then((docs) =>{
             var imageNames = docs.map((e) => {
                 return e.filename
-            })
+            });
             res.render("index", {
                 imageNames,
                 user : req.user
-            })
+            });
             console.log(docs)
         });
 });
 
 router.get('/register', function(req, res) {
-
     res.render('register', { });
 });
 
@@ -46,7 +45,6 @@ router.post('/register', function(req, res, next) {
         }
 
         passport.authenticate('local')(req, res, function () {
-            console.log();
             req.session.save(function (err) {
                 if (err) {
                     return next(err);
