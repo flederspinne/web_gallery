@@ -141,7 +141,33 @@ router.get('/:id', function(req, res){
 });
 
 router.post('/like', function(req, res){
-    console.log("Лайкнем " + req.params.id);
+
+    // Mongoose очень придирчив к типам, обычный var id = req.body.id не прокатывает!
+    ObjectId = require('mongoose').Types.ObjectId;
+    var id = new ObjectId(req.body.id);
+
+    console.log("Ставим лайк изображению с id = " + JSON.stringify(req.body.id));
+
+    var current_likes;
+
+    Image.findById(id)
+        .then((doc) => {
+            var doc = doc.toObject();
+            current_likes = parseInt(doc.metadata.likes);
+
+            // TODO: Повышать рейтинг автора фотографии
+            gfs.files.update(
+                { _id: id },
+                { $set: {
+                    'metadata.likes': current_likes + 1
+                } },
+                function (err) {
+                if (err) return handleError(err);
+                res.send({new_likes: current_likes + 1});
+            }
+            );
+        });
+
 });
 
 module.exports = router;

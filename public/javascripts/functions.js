@@ -14,8 +14,14 @@ var get_img_data = function(e) {
 // Для клиента
 // Отправка id картинки для выставления лайка
 var post_like = function(id) {
-    // TODO: Отправлять POST-запросом id на сервер, чтобы наращивать лайки и увеличивать рейтинг автора
-    alert(id);
+    $.post(
+        "/like", {
+            id: id
+        },
+        function(data) {
+            $("#likes_count_" + id).text(data.new_likes);
+        }
+    );
 };
 
 module.exports.get_img_data = get_img_data;
