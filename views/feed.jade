@@ -1,3 +1,4 @@
 ul
-    each val in imageNames
-        img(src="/" + val alt="Image Title")
+    each val in image_arr
+        p #{val.filename} by #{val.author} [#{val.tag}] #{val.likes} likes
+        // img(src="/" + val alt=val title=val)

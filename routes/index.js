@@ -4,6 +4,10 @@ var Account = require('../models/account');
 var Image = require('../models/image');
 var router = express.Router();
 
+// Наши дивные самописные функции:
+var functions = require('../public/javascripts/functions');
+var get_img_data = functions.get_img_data;
+
 // Модули для работы с БД:
 var mongoose = require('mongoose');
 var fs = require('fs');
@@ -21,15 +25,14 @@ db.once("open", function(){
 
 router.get('/', function (req, res) {
     Image.find()
-        .then((docs) =>{
-            var imageNames = docs.map((e) => {
-                return e.filename
-            });
+        .then((docs) => {
+            var image_arr = docs.map(get_img_data);
             res.render("index", {
-                imageNames,
+                image_arr: image_arr,
                 user : req.user
             });
-            console.log(docs)
+            console.log(docs);
+            console.log(image_arr);
         });
 });
 
@@ -81,14 +84,13 @@ router.post('/search', function(req, res){
 
     Image.find({'metadata.tag': { $all: tag_array }})
         .then((docs) =>{
-            var imageNames = docs.map((e) => {
-                return e.filename
-            })
+            var image_arr = docs.map(get_img_data);
             res.render("index", {
-                imageNames,
+                image_arr: image_arr,
                 user : req.user
-            })
-            console.log(imageNames)
+            });
+            console.log(docs);
+            console.log(image_arr);
         });
 });
 
@@ -109,7 +111,8 @@ router.post('/upload', upload.single('file'), function(req, res){
         filename: filename,
         metadata: {
             tag: tag_array,
-            author: req.user.username
+            author: req.user.username,
+            likes: 0
         }
     });
 
