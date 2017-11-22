@@ -21,3 +21,17 @@ a {
     top: 100px;
     z-index: 0;
 }
+
+/* Контейнер блоков Masonry */
+.masonry {
+    column-count: 5; /* сколько колонок нужно? */
+    column-gap: 0; /* промежуток между блоками (справа или слева) */
+}
+
+/* Блоки Masonry */
+.masonry .img_item {
+    background-color: #eee;
+    display: inline-block;
+    margin-bottom: -5px;
+    width: 100%;
+}

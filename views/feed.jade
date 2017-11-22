@@ -1,4 +1,5 @@
-ul
+.masonry
     each val in image_arr
-        p #{val.filename} by #{val.author} [#{val.tag}] #{val.likes} likes
-        // img(src="/" + val alt=val title=val)
+        // p #{val.filename} by #{val.author} [#{val.tag}] #{val.likes} likes
+
+        img(src="/" + val.filename alt=val.filename title=val.filename class="img_item")

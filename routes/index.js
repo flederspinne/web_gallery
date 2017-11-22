@@ -24,7 +24,7 @@ db.once("open", function(){
 });
 
 router.get('/', function (req, res) {
-    Image.find()
+    Image.find().sort({ $natural: -1 })
         .then((docs) => {
             var image_arr = docs.map(get_img_data);
             res.render("index", {
@@ -82,7 +82,7 @@ router.post('/search', function(req, res){
     // Разбиваем на элементы массива
     var tag_array = tag.split(" ");
 
-    Image.find({'metadata.tag': { $all: tag_array }})
+    Image.find({'metadata.tag': { $all: tag_array }}).sort({ $natural: -1 })
         .then((docs) =>{
             var image_arr = docs.map(get_img_data);
             res.render("index", {
