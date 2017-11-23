@@ -1,6 +1,6 @@
 .masonry
     each val in image_arr
-        .img_item
+        div(class="img_item" id="img_item_" + val.id)
             .img_data_top
                 span(id="likes_count_" + val.id) #{val.likes}
                 // Если убрать одинарные кавычки из параметра, передаваемого в post_like, ничего работать не будет,
@@ -10,10 +10,22 @@
             img(src="/" + val.id class="img")
 
             .img_data_bottom
-                a(href="/author/" + val.author_id) #{val.author_name}
+                a(href="/author/" + val.author_id class="author_name") #{val.author_name}
                 br
-                // TODO: Получать теги по одному, делать из них ссылки
-                // Переход по ссылке равнозначен запросу POST /search с search_tag = кликнутый тег
                 each tag in val.tag
-                    a(onclick="search_by_tag('" + tag + "')")= tag
+                    a(onclick="search_by_tag('" + tag + "')" class="tag")= tag
                     |   &#8195;
+
+script.
+    $(document).ready(function () {
+        var img_data_bottom_height = $(".img_data_bottom").css("height");
+        $(".img_data_bottom").css("margin-top", "-" + img_data_bottom_height);
+    });
+
+    $(".img_item").hover(function () {
+        $("#" + $(this).prop("id") + " .img_data_top").css("visibility", "visible");
+        $("#" + $(this).prop("id") + " .img_data_bottom").css("visibility", "visible");
+    }, function () {
+        $("#" + $(this).prop("id") + " .img_data_top").css("visibility", "hidden");
+        $("#" + $(this).prop("id") + " .img_data_bottom").css("visibility", "hidden");
+    });
