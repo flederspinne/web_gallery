@@ -38,6 +38,18 @@ var subscribe = function (author_id) {
     );
 };
 
+// Отписаться от автора
+var unsubscribe = function (author_id) {
+    $.post(
+        "/unsubscribe", {
+            id: author_id
+        },
+        function(data) {
+            alert("Ура!");
+        }
+    );
+};
+
 // Поиск по тегу
 var search_by_tag = function (tag) {
     $.post(

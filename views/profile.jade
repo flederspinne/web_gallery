@@ -15,10 +15,16 @@ block header
         a(href="/logout") Выход
 
 block content
-    |   Это страница автора #{author_info.name}
-    br
-    |   Его рейтинг: #{author_info.rating}
-    br
-    if (user)
-        // TODO: Проверять, есть ли чувак у нас в подписках, иначе отписываемся
-        button#subscribe_button(onclick="subscribe('" + author_info.id + "')") Подписаться
+    if (author_info)
+        |   Это страница автора #{author_info.name}
+        br
+        |   Его рейтинг: #{author_info.rating}
+        br
+        if (user)
+            -if (user.subscriptions.indexOf(author_info.id) > -1)
+                p Вы подписаны на обновления #{author_info.name}
+                button#unsubscribe_button(onclick="unsubscribe('" + author_info.id + "')") Отписаться
+            -else
+                button#subscribe_button(onclick="subscribe('" + author_info.id + "')") Подписаться
+    if (!author_info)
+        | К сожалению, этот пользователь удалил свою страницу.

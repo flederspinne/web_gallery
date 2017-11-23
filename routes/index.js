@@ -167,18 +167,21 @@ router.post('/like', function(req, res){
 
                     Account.findById(author_id)
                         .then((doc) => {
-                            var doc = doc.toObject();
-                            var current_rating = parseInt(doc.rating);
+                            // Если автор есть (мало ли, вдруг страницу удалил), поднимаем ему рейтинг
+                            if (doc !== null) {
+                                var doc = doc.toObject();
+                                var current_rating = parseInt(doc.rating);
 
-                            Account.update(
-                                { _id: author_id },
-                                { $set: {
-                                    'rating': current_rating + 1
-                                } },
-                                function (err) {
-                                    if (err) return handleError(err);
-                                }
-                            );
+                                Account.update(
+                                    { _id: author_id },
+                                    { $set: {
+                                        'rating': current_rating + 1
+                                    } },
+                                    function (err) {
+                                        if (err) return handleError(err);
+                                    }
+                                );
+                            }
                         });
 
                     res.send({new_likes: current_likes + 1});
@@ -189,7 +192,6 @@ router.post('/like', function(req, res){
 });
 
 router.get('/author/:id', function(req, res){
-    // TODO: Цеплять по id всю информацию об авторе
     console.log("Профиль автора " + req.params.id);
 
     ObjectId = require('mongoose').Types.ObjectId;
@@ -197,18 +199,24 @@ router.get('/author/:id', function(req, res){
 
     Account.findById(id)
         .then((doc) => {
-            var doc = doc.toObject();
-            console.log("Получена информация об авторе: " + JSON.stringify(doc));
+            if (doc !== null) {
+                var doc = doc.toObject();
+                console.log("Получена информация об авторе: " + JSON.stringify(doc));
 
-            res.render("profile", {
-                user : req.user,
-                author_info: {
-                    id : id,
-                    name: doc.username,
-                    subscriptions: doc.subscriptions,
-                    rating: doc.rating
-                }
-            });
+                res.render("profile", {
+                    user : req.user,
+                    author_info: {
+                        id : id,
+                        name: doc.username,
+                        subscriptions: doc.subscriptions,
+                        rating: doc.rating
+                    }
+                });
+            } else {
+                res.render("profile", {
+                    user : req.user
+                });
+            }
         });
 
 });
@@ -228,6 +236,37 @@ router.post('/subscribe', function(req, res){
             console.log("Нашли себя: " + JSON.stringify(doc));
             var current_subscriptions = doc.subscriptions;
             current_subscriptions.push(author_id);
+
+            Account.update(
+                { _id: user_id },
+                { $set: {
+                    'subscriptions': current_subscriptions
+                } },
+                function (err, ok) {
+                    if (err) return handleError(err);
+                    res.send(ok);
+                }
+            );
+        });
+
+});
+
+router.post('/unsubscribe', function(req, res){
+
+    // Mongoose очень придирчив к типам, обычный var id = req.body.id не прокатывает!
+    ObjectId = require('mongoose').Types.ObjectId;
+    var author_id = new ObjectId(req.body.id);
+    var user_id = new ObjectId(req.user._id);
+
+    console.log("Отписываемся от автора с id = " + JSON.stringify(author_id) + ", наш id = " + user_id);
+
+    Account.findById(user_id)
+        .then((doc) => {
+            var doc = doc.toObject();
+            console.log("Нашли себя: " + JSON.stringify(doc));
+            var current_subscriptions = doc.subscriptions;
+            var author_number = current_subscriptions.indexOf(author_id);
+            current_subscriptions.splice(author_number, 1);
 
             Account.update(
                 { _id: user_id },
