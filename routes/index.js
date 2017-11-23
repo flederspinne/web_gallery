@@ -98,6 +98,7 @@ router.post('/upload', upload.single('file'), function(req, res){
 
     console.log("Загружаем изображение: " + JSON.stringify(req.file) +
         "\nДобавляемые теги: " + JSON.stringify(req.body.tag));
+    console.log("Автор: " + JSON.stringify(req.user));
 
     var filename = req.file.originalname;
     // Получаем добавленные пользователем теги в виде строки
@@ -111,7 +112,8 @@ router.post('/upload', upload.single('file'), function(req, res){
         filename: filename,
         metadata: {
             tag: tag_array,
-            author: req.user.username,
+            author_id: req.user._id,
+            author_name: req.user.username,
             likes: 0
         }
     });
@@ -156,6 +158,7 @@ router.post('/like', function(req, res){
             current_likes = parseInt(doc.metadata.likes);
 
             // TODO: Повышать рейтинг автора фотографии
+            // TODO: Придумать механизм, не дающий ставить лайки себе и больше одного лайка людям
             gfs.files.update(
                 { _id: id },
                 { $set: {
@@ -166,6 +169,31 @@ router.post('/like', function(req, res){
                 res.send({new_likes: current_likes + 1});
             }
             );
+        });
+
+});
+
+router.get('/author/:id', function(req, res){
+    // TODO: Цеплять по id всю информацию об авторе
+    console.log("Профиль автора " + req.params.id);
+
+    ObjectId = require('mongoose').Types.ObjectId;
+    var id = new ObjectId(req.params.id);
+
+    Account.findById(id)
+        .then((doc) => {
+            var doc = doc.toObject();
+            console.log("Получена информация об авторе: " + JSON.stringify(doc));
+
+            res.render("profile", {
+                user : req.user,
+                author_info: {
+                    id : id,
+                    name: doc.username,
+                    subscriptions: doc.subscriptions,
+                    rating: doc.rating
+                }
+            });
         });
 
 });

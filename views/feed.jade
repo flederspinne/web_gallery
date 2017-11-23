@@ -8,4 +8,5 @@
                 a#like_button.like_button(onclick="post_like('" + val.id + "');") &#x2764;
             img(src="/" + val.id alt=val.filename title=val.filename class="img")
             .img_data_bottom
-                | #{val.filename} by #{val.author} [#{val.tag}]
+                a(href="/author/" + val.author_id) #{val.author_name}
+                p [#{val.tag}]

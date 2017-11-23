@@ -1,0 +1,20 @@
+extends layout
+
+block header
+    // TODO: include этот header отдельно
+    form#tag_search(name="tag_search", method="POST", action="/search")
+        input#input_search_tag(type="text", name="search_tag" placeholder="Поиск по тегам")
+        button(type="submit") Показать
+
+    if (!user)
+        a(href="/login") Вход
+        br
+        a(href="/register") Регистрация
+    if (user)
+        p Добро пожаловать, #{user.username}!
+        a(href="/logout") Выход
+
+block content
+    |   Это страница автора #{author_info.name}
+    br
+    |   Его рейтинг: #{author_info.rating}
