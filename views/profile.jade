@@ -1,10 +1,8 @@
 extends layout
 
 block header
-    // TODO: include этот header отдельно
-    form#tag_search(name="tag_search", method="POST", action="/search")
-        input#input_search_tag(type="text", name="search_tag" placeholder="Поиск по тегам")
-        button(type="submit") Показать
+
+    include search
 
     if (!user)
         a(href="/login") Вход
@@ -15,16 +13,19 @@ block header
         a(href="/logout") Выход
 
 block content
+
     if (author_info)
         |   Это страница автора #{author_info.name}
         br
         |   Его рейтинг: #{author_info.rating}
         br
         if (user)
-            -if (user.subscriptions.indexOf(author_info.id) > -1)
+            if (user.subscriptions.indexOf(author_info.id) > -1)
                 p Вы подписаны на обновления #{author_info.name}
                 button#unsubscribe_button(onclick="unsubscribe('" + author_info.id + "')") Отписаться
-            -else
+            else
                 button#subscribe_button(onclick="subscribe('" + author_info.id + "')") Подписаться
     if (!author_info)
         | К сожалению, этот пользователь удалил свою страницу.
+
+    include feed

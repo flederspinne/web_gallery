@@ -214,26 +214,35 @@ router.get('/author/:id', function(req, res){
     ObjectId = require('mongoose').Types.ObjectId;
     var id = new ObjectId(req.params.id);
 
-    Account.findById(id)
-        .then((doc) => {
-            if (doc !== null) {
-                var doc = doc.toObject();
-                console.log("Получена информация об авторе: " + JSON.stringify(doc));
+    Image.find({'metadata.author_id': id}).sort({ $natural: -1 })
+        .then((docs) =>{
+            var image_arr = docs.map(get_img_data);
 
-                res.render("profile", {
-                    user : req.user,
-                    author_info: {
-                        id : id,
-                        name: doc.username,
-                        subscriptions: doc.subscriptions,
-                        rating: doc.rating
+            Account.findById(id)
+                .then((doc) => {
+                    if (doc !== null) {
+                        var doc = doc.toObject();
+                        console.log("Получена информация об авторе: " + JSON.stringify(doc));
+
+                        res.render("profile", {
+                            image_arr: image_arr,
+                            user : req.user,
+                            author_info: {
+                                id : id,
+                                name: doc.username,
+                                subscriptions: doc.subscriptions,
+                                rating: doc.rating
+                            }
+                        });
+                    } else {
+                        res.render("profile", {
+                            user : req.user
+                        });
                     }
                 });
-            } else {
-                res.render("profile", {
-                    user : req.user
-                });
-            }
+
+            console.log(docs);
+            console.log(image_arr);
         });
 
 });
