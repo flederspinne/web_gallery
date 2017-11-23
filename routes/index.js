@@ -157,7 +157,6 @@ router.post('/like', function(req, res){
             var doc = doc.toObject();
             var current_likes = parseInt(doc.metadata.likes);
 
-            // TODO: Придумать механизм, не дающий ставить лайки себе и больше одного лайка людям
             gfs.files.update(
                 { _id: img_id },
                 { $set: {
@@ -165,48 +164,46 @@ router.post('/like', function(req, res){
                 } },
                 function (err) {
                     if (err) return handleError(err);
-
-                    Account.findById(author_id)
-                        .then((doc) => {
-                            // Если автор есть (мало ли, вдруг страницу удалил), поднимаем ему рейтинг
-                            if (doc !== null) {
-                                var doc = doc.toObject();
-                                var current_rating = parseInt(doc.rating);
-
-                                Account.update(
-                                    { _id: author_id },
-                                    { $set: {
-                                        'rating': current_rating + 1
-                                    } },
-                                    function (err) {
-                                        if (err) return handleError(err);
-
-                                        Account.findById(user_id)
-                                            .then((doc) => {
-                                                var doc = doc.toObject();
-                                                console.log("Нашли себя: " + JSON.stringify(doc));
-                                                var current_liked = doc.liked;
-                                                current_liked.push(img_id);
-
-                                                Account.update(
-                                                    { _id: user_id },
-                                                    { $set: {
-                                                        'liked': current_liked
-                                                    } },
-                                                    function (err) {
-                                                        if (err) return handleError(err);
-                                                    }
-                                                );
-                                            });
-
-                                    }
-                                );
-                            }
-                        });
-
                     res.send({new_likes: current_likes + 1});
                 }
-            );
+            ).then(
+                Account.findById(author_id)
+                    .then((doc) => {
+                        // Если автор есть (мало ли, вдруг страницу удалил), поднимаем ему рейтинг
+                        if (doc !== null) {
+                            var doc = doc.toObject();
+                            var current_rating = parseInt(doc.rating);
+
+                            Account.update(
+                                { _id: author_id },
+                                { $set: {
+                                    'rating': current_rating + 1
+                                } },
+                                function (err) {
+                                    if (err) return handleError(err);
+                                }
+                            );
+
+                            Account.findById(user_id)
+                                .then((doc) => {
+                                    var doc = doc.toObject();
+                                    console.log("Нашли себя: " + JSON.stringify(doc));
+                                    var current_liked = doc.liked;
+                                    current_liked.push(img_id);
+
+                                    Account.update(
+                                        { _id: user_id },
+                                        { $set: {
+                                            'liked': current_liked
+                                        } },
+                                        function (err) {
+                                            if (err) return handleError(err);
+                                        }
+                                    );
+                                });
+                        }
+                    })
+            )
         });
 
 });
