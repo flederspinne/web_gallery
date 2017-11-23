@@ -7,6 +7,7 @@ var router = express.Router();
 // Наши дивные самописные функции:
 var functions = require('../public/javascripts/functions');
 var get_img_data = functions.get_img_data;
+var get_subs_data = functions.get_subs_data;
 
 // Модули для работы с БД:
 var mongoose = require('mongoose');
@@ -131,7 +132,32 @@ router.post('/upload', upload.single('file'), function(req, res){
         .pipe(write_stream);
 });
 
-router.get('/:id', function(req, res){
+router.get('/my_profile', function(req, res) {
+
+    var my_subscriptions = req.user.subscriptions;
+    console.log("LOL подписки: " + JSON.stringify(my_subscriptions));
+
+    Account.find({'_id': { $in: my_subscriptions }})
+        .then((docs) => {
+            if (docs.length != 0) {
+                var subs_arr = docs.map(get_subs_data);
+                console.log("Мои подписки: " + JSON.stringify(subs_arr));
+
+                res.render("my_profile", {
+                    subs_arr: subs_arr,
+                    user : req.user
+                });
+            } else {
+                res.render("my_profile", {
+                    user : req.user
+                });
+            }
+        });
+
+
+});
+
+router.get('/img/:id', function(req, res){
 
     console.log("Получаем изображение по URL: /" + req.params.id);
     var read_stream = gfs.createReadStream({_id: req.params.id});

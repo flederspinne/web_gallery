@@ -1,17 +1,5 @@
 extends layout
 
-block header
-
-    include search
-
-    if (!user)
-        a(href="/login") Вход
-        br
-        a(href="/register") Регистрация
-    if (user)
-        p Добро пожаловать, #{user.username}!
-        a(href="/logout") Выход
-
 block content
 
     if (author_info)

@@ -9,7 +9,7 @@
                     span(onclick="like('" + val.id + "', '" + val.author_id + "')" class="like_button") &#x2764;
                 else
                     span(class="like_button disabled") &#x2764;
-            img(src="/" + val.id class="img")
+            img(src="/img/" + val.id class="img")
 
             .img_data_bottom
                 a(href="/author/" + val.author_id class="author_name") #{val.author_name}

@@ -12,6 +12,16 @@ var get_img_data = function(e) {
     return img_data;
 };
 
+var get_subs_data = function(e) {
+    var author_data = {};
+    var current_obj = e.toObject();
+
+    author_data.id = current_obj._id;
+    author_data.username = current_obj.username;
+
+    return author_data;
+};
+
 // Для клиента
 // Отправка id картинки для выставления лайка
 var like = function(img_id, author_id) {
@@ -67,3 +77,4 @@ var search_by_tag = function (tag) {
 };
 
 module.exports.get_img_data = get_img_data;
+module.exports.get_subs_data = get_subs_data;
