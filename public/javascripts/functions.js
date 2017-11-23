@@ -25,4 +25,16 @@ var post_like = function(id) {
     );
 };
 
+// Подписка на автора
+var subscribe = function (author_id) {
+    $.post(
+        "/subscribe", {
+            id: author_id
+        },
+        function(data) {
+            alert("Ура!");
+        }
+    );
+};
+
 module.exports.get_img_data = get_img_data;

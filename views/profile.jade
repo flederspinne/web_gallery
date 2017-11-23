@@ -18,3 +18,7 @@ block content
     |   Это страница автора #{author_info.name}
     br
     |   Его рейтинг: #{author_info.rating}
+    br
+    if (user)
+        // TODO: Проверять, есть ли чувак у нас в подписках, иначе отписываемся
+        button#subscribe_button(onclick="subscribe('" + author_info.id + "')") Подписаться

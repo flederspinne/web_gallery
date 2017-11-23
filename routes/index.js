@@ -150,12 +150,10 @@ router.post('/like', function(req, res){
 
     console.log("Ставим лайк изображению с id = " + JSON.stringify(req.body.id));
 
-    var current_likes;
-
     Image.findById(id)
         .then((doc) => {
             var doc = doc.toObject();
-            current_likes = parseInt(doc.metadata.likes);
+            var current_likes = parseInt(doc.metadata.likes);
 
             // TODO: Повышать рейтинг автора фотографии
             // TODO: Придумать механизм, не дающий ставить лайки себе и больше одного лайка людям
@@ -194,6 +192,36 @@ router.get('/author/:id', function(req, res){
                     rating: doc.rating
                 }
             });
+        });
+
+});
+
+router.post('/subscribe', function(req, res){
+
+    // Mongoose очень придирчив к типам, обычный var id = req.body.id не прокатывает!
+    ObjectId = require('mongoose').Types.ObjectId;
+    var author_id = new ObjectId(req.body.id);
+    var user_id = new ObjectId(req.user._id);
+
+    console.log("Подписываемся на автора с id = " + JSON.stringify(author_id) + ", наш id = " + user_id);
+
+    Account.findById(user_id)
+        .then((doc) => {
+            var doc = doc.toObject();
+            console.log("Нашли себя: " + JSON.stringify(doc));
+            var current_subscriptions = doc.subscriptions;
+            current_subscriptions.push(author_id);
+
+            Account.update(
+                { _id: user_id },
+                { $set: {
+                    'subscriptions': current_subscriptions
+                } },
+                function (err, ok) {
+                    if (err) return handleError(err);
+                    res.send(ok);
+                }
+            );
         });
 
 });
