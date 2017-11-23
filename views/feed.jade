@@ -6,7 +6,14 @@
                 // Если убрать одинарные кавычки из параметра, передаваемого в post_like, ничего работать не будет,
                 // потому что id у нас строка!
                 a#like_button.like_button(onclick="post_like('" + val.id + "');") &#x2764;
+
             img(src="/" + val.id alt=val.filename title=val.filename class="img")
+
             .img_data_bottom
                 a(href="/author/" + val.author_id) #{val.author_name}
-                p [#{val.tag}]
+                br
+                // TODO: Получать теги по одному, делать из них ссылки
+                // Переход по ссылке равнозначен запросу POST /search с search_tag = кликнутый тег
+                each tag in val.tag
+                    a(onclick="search_by_tag('" + tag + "')")= tag
+                    |   &#8195;

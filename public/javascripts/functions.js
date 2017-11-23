@@ -37,4 +37,18 @@ var subscribe = function (author_id) {
     );
 };
 
+// Поиск по тегу
+var search_by_tag = function (tag) {
+    $.post(
+        "/search", {
+            search_tag: tag
+        },
+        function(data) {
+            document.open();
+            document.write(data);
+            document.close();
+        }
+    );
+};
+
 module.exports.get_img_data = get_img_data;
