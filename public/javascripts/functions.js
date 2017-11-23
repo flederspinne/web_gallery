@@ -14,13 +14,14 @@ var get_img_data = function(e) {
 
 // Для клиента
 // Отправка id картинки для выставления лайка
-var post_like = function(id) {
+var like = function(img_id, author_id) {
     $.post(
         "/like", {
-            id: id
+            img_id: img_id,
+            author_id: author_id
         },
         function(data) {
-            $("#likes_count_" + id).text(data.new_likes);
+            $("#likes_count_" + img_id).text(data.new_likes);
         }
     );
 };

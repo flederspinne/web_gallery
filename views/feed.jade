@@ -2,12 +2,12 @@
     each val in image_arr
         .img_item
             .img_data_top
-                p(id="likes_count_" + val.id) #{val.likes}
+                span(id="likes_count_" + val.id) #{val.likes}
                 // Если убрать одинарные кавычки из параметра, передаваемого в post_like, ничего работать не будет,
                 // потому что id у нас строка!
-                a#like_button.like_button(onclick="post_like('" + val.id + "');") &#x2764;
+                a#like_button.like_button(onclick="like('" + val.id + "', '" + val.author_id + "');") &#x2764;
 
-            img(src="/" + val.id alt=val.filename title=val.filename class="img")
+            img(src="/" + val.id class="img")
 
             .img_data_bottom
                 a(href="/author/" + val.author_id) #{val.author_name}

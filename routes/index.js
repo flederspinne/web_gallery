@@ -146,26 +146,43 @@ router.post('/like', function(req, res){
 
     // Mongoose очень придирчив к типам, обычный var id = req.body.id не прокатывает!
     ObjectId = require('mongoose').Types.ObjectId;
-    var id = new ObjectId(req.body.id);
+    var img_id = new ObjectId(req.body.img_id);
+    var author_id = new ObjectId(req.body.author_id);
 
-    console.log("Ставим лайк изображению с id = " + JSON.stringify(req.body.id));
+    console.log("Ставим лайк изображению с id = " + img_id + " автора " + author_id);
 
-    Image.findById(id)
+    Image.findById(img_id)
         .then((doc) => {
             var doc = doc.toObject();
             var current_likes = parseInt(doc.metadata.likes);
 
-            // TODO: Повышать рейтинг автора фотографии
             // TODO: Придумать механизм, не дающий ставить лайки себе и больше одного лайка людям
             gfs.files.update(
-                { _id: id },
+                { _id: img_id },
                 { $set: {
                     'metadata.likes': current_likes + 1
                 } },
                 function (err) {
-                if (err) return handleError(err);
-                res.send({new_likes: current_likes + 1});
-            }
+                    if (err) return handleError(err);
+
+                    Account.findById(author_id)
+                        .then((doc) => {
+                            var doc = doc.toObject();
+                            var current_rating = parseInt(doc.rating);
+
+                            Account.update(
+                                { _id: author_id },
+                                { $set: {
+                                    'rating': current_rating + 1
+                                } },
+                                function (err) {
+                                    if (err) return handleError(err);
+                                }
+                            );
+                        });
+
+                    res.send({new_likes: current_likes + 1});
+                }
             );
         });
 
