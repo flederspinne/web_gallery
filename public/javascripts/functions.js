@@ -21,6 +21,8 @@ var like = function(img_id, author_id) {
             author_id: author_id
         },
         function(data) {
+            $("#img_item_" + img_id + " .like_button").removeAttr("onclick");
+            $("#img_item_" + img_id + " .like_button").addClass("disabled");
             $("#likes_count_" + img_id).text(data.new_likes);
         }
     );

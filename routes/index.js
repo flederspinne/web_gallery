@@ -148,6 +148,7 @@ router.post('/like', function(req, res){
     ObjectId = require('mongoose').Types.ObjectId;
     var img_id = new ObjectId(req.body.img_id);
     var author_id = new ObjectId(req.body.author_id);
+    var user_id = new ObjectId(req.user._id);
 
     console.log("Ставим лайк изображению с id = " + img_id + " автора " + author_id);
 
@@ -179,6 +180,25 @@ router.post('/like', function(req, res){
                                     } },
                                     function (err) {
                                         if (err) return handleError(err);
+
+                                        Account.findById(user_id)
+                                            .then((doc) => {
+                                                var doc = doc.toObject();
+                                                console.log("Нашли себя: " + JSON.stringify(doc));
+                                                var current_liked = doc.liked;
+                                                current_liked.push(img_id);
+
+                                                Account.update(
+                                                    { _id: user_id },
+                                                    { $set: {
+                                                        'liked': current_liked
+                                                    } },
+                                                    function (err) {
+                                                        if (err) return handleError(err);
+                                                    }
+                                                );
+                                            });
+
                                     }
                                 );
                             }

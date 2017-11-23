@@ -66,10 +66,26 @@ a {
     z-index: 10;
 }
 
-.author_name {
-    color: #E0E0E0;
+.author_name, .tag, .likes_count {
+    color: #F9FBE7;
+    line-height: 1.5em;
+    margin: 10px;
 }
 
-.tag {
-    color: #E0E0E0;
+.like_button {
+    color: #EF5350;
+    cursor: pointer;
+    font-size: 1.2em;
+    margin: 5px 5px 5px 0;
+    position: relative;
 }
+
+.like_button:active {
+    color: #E53935;
+}
+
+.disabled, .disabled:active {
+    color: #caa2a6;
+    cursor: zoom-in;
+}
+
