@@ -3,6 +3,10 @@ extends layout
 block content
 
     h1 Мой профиль
+    if (user)
+        form#file_upload(name="file_upload", method="POST", action="/upload_avatar", enctype="multipart/form-data")
+            input#input_file(type="file", name="file")
+            button(type="submit") Изменить аватар
     p Логин: #{user.username}
     p Мой рейтинг: #{user.rating}
     if (subs_arr)

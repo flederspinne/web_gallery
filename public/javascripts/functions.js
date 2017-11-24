@@ -8,6 +8,7 @@ var get_img_data = function(e) {
     img_data.author_name = current_obj.metadata.author_name;
     img_data.tag = current_obj.metadata.tag;
     img_data.likes = current_obj.metadata.likes;
+    img_data.type = current_obj.metadata.type;
 
     return img_data;
 };

@@ -132,6 +132,51 @@ router.post('/upload', upload.single('file'), function(req, res){
         .pipe(write_stream);
 });
 
+router.post('/upload_avatar', upload.single('file'), function(req, res){
+
+    console.log("Загружаем аватар: " + JSON.stringify(req.file));
+
+    ObjectId = require('mongoose').Types.ObjectId;
+    var filename = req.file.originalname;
+    var user_id = new ObjectId(req.user._id);
+
+    var write_stream = gfs.createWriteStream({
+        filename: filename,
+        metadata: {
+            type: "Avatar"
+        }
+    });
+
+    fs.createReadStream("./uploads/" + req.file.filename)
+        .on("end", function(){
+            fs.unlink("./uploads/"+ req.file.filename, function(err){
+                var new_avatar_id = (write_stream.id).toString();
+
+                console.log("Аватар получает id = " + new_avatar_id);
+
+                Account.update(
+                    { _id: user_id },
+                    { $set: {
+                        "avatar": new_avatar_id
+                    } },
+                    function (err) {
+                        if (err) return handleError(err);
+                        // TODO: Заменить на вывод аватара на экран в профиле
+                        res.redirect('/');
+                    }
+                );
+
+            })
+        })
+        .on("err", function(){
+            res.send("Error uploading image")
+        })
+        .pipe(write_stream);
+
+
+
+});
+
 router.get('/my_profile', function(req, res) {
 
     var my_subscriptions = req.user.subscriptions;
