@@ -284,6 +284,7 @@ router.get('/author/:id', function(req, res){
                             author_info: {
                                 id : id,
                                 name: doc.username,
+                                avatar: doc.avatar,
                                 subscriptions: doc.subscriptions,
                                 rating: doc.rating
                             }

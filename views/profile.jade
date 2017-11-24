@@ -3,11 +3,16 @@ extends layout
 block content
 
     if (author_info)
+        if (author_info.avatar)
+            img(src="/img/" + author_info.avatar class="avatar")
+        else
+            img(src="/images/octocat.jpg" class="avatar")
+        br
         |   Это страница автора #{author_info.name}
         br
         |   Его рейтинг: #{author_info.rating}
         br
-        if (user)
+        if ((user) && ((user._id).toString() !== (author_info.id).toString()))
             if (user.subscriptions.indexOf(author_info.id) > -1)
                 p Вы подписаны на обновления #{author_info.name}
                 button#unsubscribe_button(onclick="unsubscribe('" + author_info.id + "')") Отписаться
