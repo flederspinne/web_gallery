@@ -107,9 +107,8 @@ var delete_myself = function (user_id) {
     }
 };
 
-var set_img_info = function (val) {
-    // img_info = val;
-    // alert("TEST: " + JSON.stringify(img_info));
+var get_large_img = function (img_id) {
+    window.location = "/large/" + img_id;
 };
 
 module.exports.get_img_data = get_img_data;

@@ -243,6 +243,23 @@ router.get('/img/:id', function(req, res){
     read_stream.pipe(res);
 });
 
+router.get('/large/:id', function(req, res){
+
+    var img_id = new ObjectId(req.params.id);
+    console.log("Получаем большое изображение с id = " + img_id);
+
+    Image.findById(img_id)
+        .then((doc) => {
+            var img_info = get_img_data(doc);
+            console.log("Картинушка: " + JSON.stringify(img_info));
+            res.render("image", {
+                img_info: img_info,
+                user : req.user
+            });
+        })
+
+});
+
 router.post('/like', function(req, res){
 
     var img_id = new ObjectId(req.body.img_id);
