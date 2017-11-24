@@ -4,6 +4,9 @@ var Account = require('../models/account');
 var Image = require('../models/image');
 var router = express.Router();
 
+// Mongoose очень придирчив к типам, обычный var id = req.body.id не прокатывает!
+ObjectId = require('mongoose').Types.ObjectId;
+
 // Наши дивные самописные функции:
 var functions = require('../public/javascripts/functions');
 var get_img_data = functions.get_img_data;
@@ -136,7 +139,6 @@ router.post('/upload_avatar', upload.single('file'), function(req, res){
 
     console.log("Загружаем аватар: " + JSON.stringify(req.file));
 
-    ObjectId = require('mongoose').Types.ObjectId;
     var filename = req.file.originalname;
     var user_id = new ObjectId(req.user._id);
 
@@ -202,6 +204,20 @@ router.get('/my_profile', function(req, res) {
 
 });
 
+router.post('/delete_img', function(req, res) {
+
+    var img_id = new ObjectId(req.body.img_id);
+
+    console.log("Собираемся удалить изображение с id = " + img_id);
+
+    gfs.remove({ _id: img_id }, function (err) {
+        if (err) return handleError(err);
+        console.log("Изображение с id = " + img_id + " успешно удалено");
+        res.send("ok");
+    });
+
+});
+
 router.get('/img/:id', function(req, res){
 
     console.log("Получаем изображение по URL: /" + req.params.id);
@@ -215,8 +231,6 @@ router.get('/img/:id', function(req, res){
 
 router.post('/like', function(req, res){
 
-    // Mongoose очень придирчив к типам, обычный var id = req.body.id не прокатывает!
-    ObjectId = require('mongoose').Types.ObjectId;
     var img_id = new ObjectId(req.body.img_id);
     var author_id = new ObjectId(req.body.author_id);
     var user_id = (req.user._id).toString();
@@ -265,7 +279,6 @@ router.post('/like', function(req, res){
 router.get('/author/:id', function(req, res){
     console.log("Профиль автора " + req.params.id);
 
-    ObjectId = require('mongoose').Types.ObjectId;
     var id = new ObjectId(req.params.id);
 
     Image.find({'metadata.author_id': id}).sort({ $natural: -1 })
@@ -304,8 +317,6 @@ router.get('/author/:id', function(req, res){
 
 router.post('/subscribe', function(req, res){
 
-    // Mongoose очень придирчив к типам, обычный var id = req.body.id не прокатывает!
-    ObjectId = require('mongoose').Types.ObjectId;
     var author_id = new ObjectId(req.body.id);
     var user_id = new ObjectId(req.user._id);
 
@@ -334,8 +345,6 @@ router.post('/subscribe', function(req, res){
 
 router.post('/unsubscribe', function(req, res){
 
-    // Mongoose очень придирчив к типам, обычный var id = req.body.id не прокатывает!
-    ObjectId = require('mongoose').Types.ObjectId;
     var author_id = new ObjectId(req.body.id);
     var user_id = new ObjectId(req.user._id);
 

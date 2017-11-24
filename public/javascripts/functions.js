@@ -77,5 +77,22 @@ var search_by_tag = function (tag) {
     );
 };
 
+// Удаление изображения
+var delete_img = function (id) {
+
+    if (confirm("Вы действительно хотите удалить это изображение?" +
+        "\nОтменить это действие будет невозможно!")) {
+        $.post(
+            "/delete_img", {
+                img_id: id
+            },
+            function(data) {
+                location.reload();
+            }
+        );
+    }
+    
+};
+
 module.exports.get_img_data = get_img_data;
 module.exports.get_subs_data = get_subs_data;

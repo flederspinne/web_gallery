@@ -89,6 +89,11 @@ a {
     cursor: zoom-in;
 }
 
+.delete {
+    margin-left: 78%;
+    position: relative;
+}
+
 .avatar {
     border-radius: 50%;
     height: 200px;
