@@ -162,7 +162,7 @@ router.post('/upload_avatar', upload.single('file'), function(req, res){
                     function (err) {
                         if (err) return handleError(err);
                         // TODO: Заменить на вывод аватара на экран в профиле
-                        res.redirect('/');
+                        res.redirect('/my_profile');
                     }
                 );
 
