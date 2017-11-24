@@ -20,3 +20,5 @@ block content
             each author in subs_arr
                 a(href="/author/" + author.id) #{author.username}
                 |   &#8194;
+
+        button(onclick="delete_myself('" + user._id + "')") Удалить профиль

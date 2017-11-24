@@ -79,7 +79,6 @@ var search_by_tag = function (tag) {
 
 // Удаление изображения
 var delete_img = function (id) {
-
     if (confirm("Вы действительно хотите удалить это изображение?" +
         "\nОтменить это действие будет невозможно!")) {
         $.post(
@@ -91,7 +90,21 @@ var delete_img = function (id) {
             }
         );
     }
-    
+};
+
+// Удаление своего профиля
+var delete_myself = function (user_id) {
+    if (confirm("Вы действительно хотите удалить свой профиль?" +
+            "\nОтменить это действие будет невозможно!")) {
+        $.post(
+            "/delete_myself", {
+                user_id: user_id
+            },
+            function(data) {
+                window.location = "/";
+            }
+        );
+    }
 };
 
 module.exports.get_img_data = get_img_data;

@@ -218,6 +218,20 @@ router.post('/delete_img', function(req, res) {
 
 });
 
+router.post('/delete_myself', function(req, res) {
+
+    var user_id = new ObjectId(req.body.user_id);
+
+    console.log("Пользователь с id = " + user_id + " хочет удалить свой профиль");
+
+    Account.findByIdAndRemove(user_id, function (err) {
+        if (err) return handleError(err);
+        console.log("Пользователь с id = " + user_id + " успешно удалён");
+        res.send("ok");
+    });
+
+});
+
 router.get('/img/:id', function(req, res){
 
     console.log("Получаем изображение по URL: /" + req.params.id);
