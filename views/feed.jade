@@ -1,7 +1,7 @@
 .masonry
     each val in image_arr
         if (val.type !== "Avatar")
-            div(class="img_item" id="img_item_" + val.id)
+            div(onclick="" class="img_item" id="img_item_" + val.id)
                 .img_data_top
                     span(id="likes_count_" + val.id class="likes_count") #{val.likes.length}
                     // Если убрать одинарные кавычки из параметра, передаваемого в post_like, ничего работать не будет,
@@ -25,6 +25,17 @@
                         a(onclick="search_by_tag('" + tag + "')" class="tag")= tag
                         |   &#8194;
 
+
+
+//
+    Функция, отправляющая id фотки по какому-то URL через GET-запрос.
+    Обработчик маршрута заново получает всю инфу (можно для солидности какую-то дополнительную,
+    которой на миниатюре не видно), пакует в объект со страшным названием и отправляет обратно сюда.
+    Здесь мы, если есть инфа внутри страшного названия, показываем новый div с картинкой,
+    где отображена вся инфа, запакованная в объект со страшным названием.
+    Когда закрываем увеличенную картинку, новый div detach'ится.
+
+
 script.
     $(document).ready(function () {
         var img_data_bottom_height = $(".img_data_bottom").css("height");
@@ -38,3 +49,4 @@ script.
         $("#" + $(this).prop("id") + " .img_data_top").css("visibility", "hidden");
         $("#" + $(this).prop("id") + " .img_data_bottom").css("visibility", "hidden");
     });
+

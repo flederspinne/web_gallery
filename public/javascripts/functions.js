@@ -107,5 +107,10 @@ var delete_myself = function (user_id) {
     }
 };
 
+var set_img_info = function (val) {
+    // img_info = val;
+    // alert("TEST: " + JSON.stringify(img_info));
+};
+
 module.exports.get_img_data = get_img_data;
 module.exports.get_subs_data = get_subs_data;
