@@ -21,9 +21,14 @@
                 .img_data_bottom
                     a(href="/author/" + val.author_id class="author_name") #{val.author_name}
                     br
+                    - var index = 0
                     each tag in val.tag
-                        a(onclick="search_by_tag('" + tag + "')" class="tag")= tag
-                        |   &#8194;
+                        if(index < 3)
+                            button(onclick="search_by_tag('" + tag + "')" class="tag")= tag
+                            |   &thinsp;
+                        - index++
+                        if (index === 3)
+                            span(class="light_text") ...
 
 script.
     $(document).ready(function () {

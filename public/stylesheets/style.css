@@ -7,6 +7,10 @@ a {
     cursor: pointer;
 }
 
+.light_text {
+    color: white;
+}
+
 .header {
     background: #C8E6C9;
     height: 100px;
@@ -67,7 +71,7 @@ a {
 }
 
 .author_name, .tag, .likes_count {
-    color: #F9FBE7;
+    color: white;
     line-height: 1.5em;
     margin: 10px;
 }
@@ -89,6 +93,12 @@ a {
     cursor: zoom-in;
 }
 
+.tag {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
 .delete {
     margin-left: 78%;
     position: relative;
@@ -99,4 +109,8 @@ a {
     height: 200px;
     object-fit: cover;
     width: 200px;
+}
+
+.large {
+    height: 85vh;
 }
