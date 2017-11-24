@@ -2,10 +2,12 @@
     each val in image_arr
         div(class="img_item" id="img_item_" + val.id)
             .img_data_top
-                span(id="likes_count_" + val.id class="likes_count") #{val.likes}
+                span(id="likes_count_" + val.id class="likes_count") #{val.likes.length}
                 // Если убрать одинарные кавычки из параметра, передаваемого в post_like, ничего работать не будет,
-                // потому что id у нас строка!
-                if ((user) && (user.liked.indexOf(val.id) === -1) && ((user._id).toString() !== (val.author_id).toString()))
+                    потому что id у нас строка!
+                    Со сравнением id у нас всегда проблемы, если это mongoose'овский ObjectId.
+                    Всегда приводить их к единому типу вручную перед сравнением!
+                if ((user) && (val.likes.indexOf((user._id).toString()) === -1) && ((user._id).toString() !== (val.author_id).toString()))
                     span(onclick="like('" + val.id + "', '" + val.author_id + "')" class="like_button") &#x2764;
                 else
                     span(class="like_button disabled") &#x2764;

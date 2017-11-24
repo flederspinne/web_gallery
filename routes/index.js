@@ -115,7 +115,7 @@ router.post('/upload', upload.single('file'), function(req, res){
             tag: tag_array,
             author_id: req.user._id,
             author_name: req.user.username,
-            likes: 0
+            likes: []
         }
     });
 
@@ -174,23 +174,24 @@ router.post('/like', function(req, res){
     ObjectId = require('mongoose').Types.ObjectId;
     var img_id = new ObjectId(req.body.img_id);
     var author_id = new ObjectId(req.body.author_id);
-    var user_id = new ObjectId(req.user._id);
+    var user_id = (req.user._id).toString();
 
     console.log("Ставим лайк изображению с id = " + img_id + " автора " + author_id);
 
     Image.findById(img_id)
         .then((doc) => {
             var doc = doc.toObject();
-            var current_likes = parseInt(doc.metadata.likes);
+            var current_likes = doc.metadata.likes;
+            current_likes.push(user_id);
 
             gfs.files.update(
                 { _id: img_id },
                 { $set: {
-                    'metadata.likes': current_likes + 1
+                    'metadata.likes': current_likes
                 } },
                 function (err) {
                     if (err) return handleError(err);
-                    res.send({new_likes: current_likes + 1});
+                    res.send({new_likes: current_likes});
                 }
             ).then(
                 Account.findById(author_id)
@@ -209,24 +210,6 @@ router.post('/like', function(req, res){
                                     if (err) return handleError(err);
                                 }
                             );
-
-                            Account.findById(user_id)
-                                .then((doc) => {
-                                    var doc = doc.toObject();
-                                    console.log("Нашли себя: " + JSON.stringify(doc));
-                                    var current_liked = doc.liked;
-                                    current_liked.push(img_id);
-
-                                    Account.update(
-                                        { _id: user_id },
-                                        { $set: {
-                                            'liked': current_liked
-                                        } },
-                                        function (err) {
-                                            if (err) return handleError(err);
-                                        }
-                                    );
-                                });
                         }
                     })
             )

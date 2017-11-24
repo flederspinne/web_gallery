@@ -6,8 +6,7 @@ var Account = new Schema({
     username: String,
     password: String,
     rating: { type: Number, default: 0 },
-    subscriptions: Array,
-    liked: Array
+    subscriptions: Array
 });
 
 Account.plugin(passportLocalMongoose);
