@@ -2,11 +2,5 @@ extends layout
 
 block content
 
-    if (user)
-        form#file_upload(name="file_upload", method="POST", action="/upload", enctype="multipart/form-data")
-            input#input_file(type="file", name="file")
-            input#input_file_tag(type="text", name="tag")
-            button(type="submit") Загрузить
-
     include feed
 

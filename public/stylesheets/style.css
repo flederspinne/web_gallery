@@ -47,6 +47,7 @@ a:hover {
 
 #tag_search {
     background: #d1d4e8;
+    border-radius: 2px;
     float: left;
     position: relative;
     margin: 27px;
@@ -94,8 +95,10 @@ a:hover {
 
 .my_info {
     cursor: pointer;
-    float: left;
-    margin: 15px 25px 0 56%;
+    float: right;
+    margin: 15px 50px 0 0;
+    position: relative;
+    width: auto;
 }
 
 .welcome_text {
@@ -106,7 +109,57 @@ a:hover {
 
 .fa-sign-out {
     color: #E8EAF6;
-    margin: 38px 0 0 20px;
+    float: right;
+    margin: 38px 50px 0 0;
+}
+
+.fa-sign-in {
+    color: #E8EAF6;
+    float: right;
+    margin: 38px 50px 0 0;
+}
+
+.fa-user-plus {
+    color: #E8EAF6;
+    float: right;
+    margin: 38px 50px 0 0;
+}
+
+#file_upload {
+    cursor: pointer;
+    float: right;
+    margin: 22px 50px 0 0;
+    overflow: hidden;
+    position: relative;
+    width: 54px;
+}
+
+.fa-camera-retro {
+    color: #E8EAF6;
+    cursor: pointer;
+    z-index: 200;
+}
+
+.fa-camera-retro:hover {
+    color: #9FA8DA;
+}
+
+#input_file {
+    cursor: pointer;
+    filter: alpha(opacity=0);
+    font-size: 20px;
+    height: 54px;
+    margin: 0;
+    opacity: 0;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 54px;
+}
+
+#input_file_tag, #button_file_submit {
+    visibility: hidden;
 }
 
 /* Контейнер блоков Masonry */

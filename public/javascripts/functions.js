@@ -115,5 +115,9 @@ var get_large_img = function (img_id) {
     window.location = "/large/" + img_id;
 };
 
+var show_upload = function () {
+    $("#input_file_tag, #button_file_submit").css("visibility", "visible");
+};
+
 module.exports.get_img_data = get_img_data;
 module.exports.get_subs_data = get_subs_data;

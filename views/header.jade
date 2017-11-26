@@ -3,14 +3,23 @@ form#tag_search(name="tag_search", method="POST", action="/search")
     button(type="submit" id="button_search_tag" class="fa fa-search fa-lg" aria-hidden="true")
 
 if (!user)
-    a(href="/login" class="float_left") Вход
+    a(href="/register" title="Регистрация" class="fa fa-user-plus fa-lg")
+    a(href="/login" title="Вход" class="fa fa-sign-in fa-lg")
 
-    a(href="/register" class="float_left") Регистрация
 if (user)
+    a(href="/logout" title="Выход" class="fa fa-sign-out fa-lg")
+
     .my_info
         if (user.avatar)
-            img(onclick="window.location = '/my_profile'" src="/img/" + user.avatar class="avatar small")
+            img(onclick="window.location = '/my_profile'" title="Мой профиль" src="/img/" + user.avatar class="avatar small")
         else
             img(onclick="window.location = '/my_profile'" src="/images/default-avatar.jpg" class="avatar small")
         p(class="welcome_text") Добро пожаловать, #{user.username}!
-    a(href="/logout" class="fa fa-sign-out fa-lg float_left")
+
+    form#file_upload(name="file_upload", method="POST", action="/upload", enctype="multipart/form-data")
+        a(class="fa fa-camera-retro fa-3x")
+        input#input_file(type="file", name="file" onchange="show_upload()")
+        input#input_file_tag(type="text", name="tag")
+        button#button_file_submit(type="submit") Загрузить
+
+
