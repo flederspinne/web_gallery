@@ -101,7 +101,8 @@ router.post('/search', function(req, res){
 router.post('/upload', upload.single('file'), function(req, res){
 
     console.log("Загружаем изображение: " + JSON.stringify(req.file) +
-        "\nДобавляемые теги: " + JSON.stringify(req.body.tag));
+        "\nДобавляемые теги: " + JSON.stringify(req.body.tag) +
+        "\nОписание: " + JSON.stringify(req.body.description));
     console.log("Автор: " + JSON.stringify(req.user));
 
     var filename = req.file.originalname;
@@ -118,7 +119,8 @@ router.post('/upload', upload.single('file'), function(req, res){
             tag: tag_array,
             author_id: req.user._id,
             author_name: req.user.username,
-            likes: []
+            likes: [],
+            description: req.body.description
         }
     });
 

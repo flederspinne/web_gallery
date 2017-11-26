@@ -15,3 +15,4 @@ block content
     each tag in img_info.tag
         button(onclick="search_by_tag('" + tag + "')" class="tag")= tag
         |   &thinsp;
+    p #{img_info.description}

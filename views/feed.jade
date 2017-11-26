@@ -1,7 +1,7 @@
 .masonry
     each val in image_arr
         if (val.type !== "Avatar")
-            div(onclick="get_large_img('" + val.id + "')" class="img_item" id="img_item_" + val.id)
+            div(class="img_item" id="img_item_" + val.id)
                 .img_data_top
                     span(id="likes_count_" + val.id class="likes_count") #{val.likes.length}
                     // Если убрать одинарные кавычки из параметра, передаваемого в post_like, ничего работать не будет,
@@ -16,7 +16,7 @@
                         if ((user._id).toString() === (val.author_id).toString())
                             a(onclick="delete_img('" + val.id + "')" id="img_delete_" + val.id class="delete") &#x2716;
 
-                img(src="/img/" + val.id class="img")
+                img(onclick="get_large_img('" + val.id + "')" src="/img/" + val.id class="img")
 
                 .img_data_bottom
                     a(href="/author/" + val.author_id class="author_name") #{val.author_name}

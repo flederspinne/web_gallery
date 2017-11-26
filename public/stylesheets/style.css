@@ -214,7 +214,6 @@ a:hover {
 }
 
 .img_item:hover {
-    cursor: zoom-in;
     filter: brightness(0.8);
 }
 
@@ -232,6 +231,10 @@ a:hover {
     position: relative;
     width: 100%;
     z-index: 0;
+}
+
+.img:hover {
+    cursor: zoom-in;
 }
 
 .img_data_bottom {

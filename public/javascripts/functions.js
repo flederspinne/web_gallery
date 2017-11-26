@@ -9,6 +9,7 @@ var get_img_data = function(e) {
     img_data.tag = current_obj.metadata.tag;
     img_data.likes = current_obj.metadata.likes;
     img_data.type = current_obj.metadata.type;
+    img_data.description = current_obj.metadata.description;
 
     return img_data;
 };
