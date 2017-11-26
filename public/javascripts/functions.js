@@ -116,7 +116,8 @@ var get_large_img = function (img_id) {
 };
 
 var show_upload = function () {
-    $("#input_file_tag, #button_file_submit").css("visibility", "visible");
+    $("#upload_file_settings").css("visibility", "visible");
+    $("#img_uploading_info").text("Загрузка файла " + $("#input_file").val().replace(/C:\\fakepath\\/i, ''));
 };
 
 module.exports.get_img_data = get_img_data;

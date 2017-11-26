@@ -19,7 +19,6 @@ if (user)
     form#file_upload(name="file_upload", method="POST", action="/upload", enctype="multipart/form-data")
         a(class="fa fa-camera-retro fa-3x")
         input#input_file(type="file", name="file" onchange="show_upload()")
-        input#input_file_tag(type="text", name="tag")
-        button#button_file_submit(type="submit") Загрузить
+        include upload_file_settings
 
 
