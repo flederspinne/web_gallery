@@ -11,7 +11,7 @@ a {
     cursor: pointer;
 }
 
-a:hover {
+.label_tag:hover, a:hover {
     color: #9FA8DA;
 }
 
@@ -27,11 +27,11 @@ a:hover {
 .text {
     color: #212121;
     margin: 20px;
-    text-align: center;
 }
 
 .level_1 {
     font-size: 1.2em;
+    text-align: center;
 }
 
 .level_2 {
@@ -133,7 +133,7 @@ a:hover {
 .welcome_text {
     color: #E8EAF6;
     font-size: 0.8em;
-    margin: 5px 0 0 0;
+    margin: 10px 0 0 0;
 }
 
 .fa-sign-out {
@@ -306,7 +306,6 @@ a:hover {
 }
 
 .img_info {
-    border: 1px solid teal;
     float: left;
     margin: 5% 3%;
     position: relative;
@@ -316,4 +315,24 @@ a:hover {
     font-size: 3em;
 }
 
+.likes {
+    color: #424242;
+}
+
+.label {
+    color: #424242;
+    font-weight: bold;
+    line-height: 2em;
+}
+
+.label_tag {
+    color: #3F51B5;
+    cursor: pointer;
+    /* font-weight: bold; */
+}
+
+.gray {
+    color: #505c70;
+    font-weight: normal;
+}
 

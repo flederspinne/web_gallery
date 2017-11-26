@@ -10,6 +10,7 @@ var get_img_data = function(e) {
     img_data.likes = current_obj.metadata.likes;
     img_data.type = current_obj.metadata.type;
     img_data.description = current_obj.metadata.description;
+    img_data.upload_date = current_obj.uploadDate;
 
     return img_data;
 };
@@ -120,6 +121,7 @@ var show_upload = function () {
     $("#upload_file_settings").css("visibility", "visible");
     $("#img_uploading_info").text("Загрузка файла " + $("#input_file").val().replace(/C:\\fakepath\\/i, ''));
 };
+
 
 module.exports.get_img_data = get_img_data;
 module.exports.get_subs_data = get_subs_data;

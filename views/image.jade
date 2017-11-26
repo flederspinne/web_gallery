@@ -10,23 +10,41 @@ block content
             span(onclick="like('" + img_info.id + "', '" + img_info.author_id + "')" class="like_button big") &#x2764;
         else
             span(class="like_button disabled big") &#x2764;
-        span(id="likes_count_" + img_info.id class="big") #{img_info.likes.length}
+        span(id="likes_count_" + img_info.id class="likes big") #{img_info.likes.length}
         br
-        span Автор: &thinsp;
-        a(href="/author/" + img_info.author_id class="") #{img_info.author_name}
         br
+        span(class="label") Автор: &thinsp;
+        a(href="/author/" + img_info.author_id class="label_tag") #{img_info.author_name}
+
         if (img_info.description)
-            span Описание: &thinsp;
-            span #{img_info.description}
+            br
+            span(class="label") Описание: &thinsp;
+            span(class="label gray") #{img_info.description}
         br
-        span Теги: &thinsp;
+
+        span(class="label") Теги: &thinsp;
         each tag in img_info.tag
-            span(onclick="search_by_tag('" + tag + "')" class="")= tag
+            span(onclick="search_by_tag('" + tag + "')" class="label_tag")= tag
             |   &thinsp;
+        br
+
+        - function get_date_time(info) {
+            - var day = info.getDate();
+            - var month = info.getMonth() + 1;
+            - var year = info.getYear() + 1900;
+            - var hour = info.getHours();
+            - var minute = info.getMinutes();
+            - var second = info.getSeconds();
+
+            - return day + "." + month + "." + year + " " + hour + ":" + minute + ":" + second;
+        - }
+
+        span(class="label") Загружено: &thinsp;
+        span(class="label gray") #{get_date_time(img_info.upload_date)}
 
 
 
-    if (user)
+    // if (user)
         if ((user._id).toString() === (img_info.author_id).toString())
             a(onclick="delete_img('" + img_info.id + "')" id="img_delete_" + img_info.id class="") Удалить изображение
 
