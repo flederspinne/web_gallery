@@ -7,7 +7,7 @@ block content
         if (user.avatar)
             img(src="/img/" + user.avatar class="avatar")
         else
-            img(src="/images/octocat.jpg" class="avatar")
+            img(src="/images/default-avatar.jpg" class="avatar")
 
         form#file_upload(name="file_upload", method="POST", action="/upload_avatar", enctype="multipart/form-data")
             input#input_file(type="file", name="file")

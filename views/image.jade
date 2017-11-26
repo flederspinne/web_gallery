@@ -10,7 +10,7 @@ block content
         span(class="like_button disabled") &#x2764;
     if (user)
         if ((user._id).toString() === (img_info.author_id).toString())
-            a(onclick="delete_img('" + img_info.id + "')" id="img_delete_" + img_info.id class="") &#x2716;
+            a(onclick="delete_img('" + img_info.id + "')" id="img_delete_" + img_info.id class="") Удалить изображение
     a(href="/author/" + img_info.author_id class="") #{img_info.author_name}
     each tag in img_info.tag
         button(onclick="search_by_tag('" + tag + "')" class="tag")= tag

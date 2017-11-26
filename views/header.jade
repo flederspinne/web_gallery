@@ -1,13 +1,16 @@
 form#tag_search(name="tag_search", method="POST", action="/search")
     input#input_search_tag(type="text", name="search_tag" placeholder="Поиск по тегам")
-    button(type="submit") Показать
+    button(type="submit" id="button_search_tag" class="fa fa-search fa-lg" aria-hidden="true")
 
 if (!user)
-    a(href="/login") Вход
-    br
-    a(href="/register") Регистрация
+    a(href="/login" class="float_left") Вход
+
+    a(href="/register" class="float_left") Регистрация
 if (user)
-    p Добро пожаловать, #{user.username}!
-    a(href="/my_profile") Мой профиль
-    |   &#8194;
-    a(href="/logout") Выход
+    .my_info
+        if (user.avatar)
+            img(onclick="window.location = '/my_profile'" src="/img/" + user.avatar class="avatar small")
+        else
+            img(onclick="window.location = '/my_profile'" src="/images/default-avatar.jpg" class="avatar small")
+        p(class="welcome_text") Добро пожаловать, #{user.username}!
+    a(href="/logout" class="fa fa-sign-out fa-lg float_left")

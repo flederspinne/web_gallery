@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     font: 18px sans-serif;
 }
@@ -7,12 +11,16 @@ a {
     cursor: pointer;
 }
 
+a:hover {
+    color: #9FA8DA;
+}
+
 .light_text {
     color: white;
 }
 
 .header {
-    background: black;
+    background: #212121;
     height: 100px;
     position: fixed;
     top: 0;
@@ -24,6 +32,81 @@ a {
     position: absolute;
     top: 100px;
     z-index: 0;
+}
+
+#main_title {
+    color: white;
+    float: left;
+    font-size: 2em;
+    margin: 26px;
+}
+
+#main_title:hover {
+    color: #9FA8DA;
+}
+
+#tag_search {
+    background: #d1d4e8;
+    float: left;
+    position: relative;
+    margin: 27px;
+    width: 300px;
+}
+
+#input_search_tag, #button_search_tag {
+    background: transparent;
+    border: none;
+    outline: none;
+}
+
+#input_search_tag {
+    height: 42px;
+    padding-left: 15px;
+    width: 100%;
+}
+
+#input_search_tag:focus {
+    background: #E8EAF6;
+}
+
+#button_search_tag {
+    color: #424242;
+    cursor: pointer;
+    height: 42px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 42px;
+}
+
+#button_search_tag:hover {
+    color: #3F51B5;
+}
+
+#button_search_tag:before {
+    position: relative;
+}
+
+.float_left {
+    float: left;
+    margin: 10px;
+}
+
+.my_info {
+    cursor: pointer;
+    float: left;
+    margin: 15px 25px 0 56%;
+}
+
+.welcome_text {
+    color: #E8EAF6;
+    font-size: 0.8em;
+    margin: 5px 0 0 0;
+}
+
+.fa-sign-out {
+    color: #E8EAF6;
+    margin: 38px 0 0 20px;
 }
 
 /* Контейнер блоков Masonry */
@@ -109,6 +192,14 @@ a {
     height: 200px;
     object-fit: cover;
     width: 200px;
+}
+
+.small {
+    display: block;
+    margin: 0 auto;
+    height: 50px;
+    position: relative;
+    width: 50px;
 }
 
 .large {
