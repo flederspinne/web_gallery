@@ -1,5 +1,17 @@
 extends layout
 
 block content
-    p LOL
+
     img(src="/img/" + img_info.id class="large")
+    span(id="likes_count_" + img_info.id class="") #{img_info.likes.length}
+    if ((user) && (img_info.likes.indexOf((user._id).toString()) === -1) && ((user._id).toString() !== (img_info.author_id).toString()))
+        span(onclick="like('" + img_info.id + "', '" + img_info.author_id + "')" class="like_button") &#x2764;
+    else
+        span(class="like_button disabled") &#x2764;
+    if (user)
+        if ((user._id).toString() === (img_info.author_id).toString())
+            a(onclick="delete_img('" + img_info.id + "')" id="img_delete_" + img_info.id class="") &#x2716;
+    a(href="/author/" + img_info.author_id class="") #{img_info.author_name}
+    each tag in img_info.tag
+        button(onclick="search_by_tag('" + tag + "')" class="tag")= tag
+        |   &thinsp;

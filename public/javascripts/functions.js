@@ -86,7 +86,11 @@ var delete_img = function (id) {
                 img_id: id
             },
             function(data) {
-                location.reload();
+                if (window.location.href.indexOf("large") === -1) {
+                    location.reload();
+                } else {
+                    window.location = document.referrer;
+                }
             }
         );
     }
