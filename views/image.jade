@@ -3,16 +3,31 @@ extends layout
 block content
 
     img(src="/img/" + img_info.id class="large")
-    span(id="likes_count_" + img_info.id class="") #{img_info.likes.length}
-    if ((user) && (img_info.likes.indexOf((user._id).toString()) === -1) && ((user._id).toString() !== (img_info.author_id).toString()))
-        span(onclick="like('" + img_info.id + "', '" + img_info.author_id + "')" class="like_button") &#x2764;
-    else
-        span(class="like_button disabled") &#x2764;
+
+    div(class="img_info" id="img_item_" + img_info.id)
+
+        if ((user) && (img_info.likes.indexOf((user._id).toString()) === -1) && ((user._id).toString() !== (img_info.author_id).toString()))
+            span(onclick="like('" + img_info.id + "', '" + img_info.author_id + "')" class="like_button big") &#x2764;
+        else
+            span(class="like_button disabled big") &#x2764;
+        span(id="likes_count_" + img_info.id class="big") #{img_info.likes.length}
+        br
+        span Автор: &thinsp;
+        a(href="/author/" + img_info.author_id class="") #{img_info.author_name}
+        br
+        if (img_info.description)
+            span Описание: &thinsp;
+            span #{img_info.description}
+        br
+        span Теги: &thinsp;
+        each tag in img_info.tag
+            span(onclick="search_by_tag('" + tag + "')" class="")= tag
+            |   &thinsp;
+
+
+
     if (user)
         if ((user._id).toString() === (img_info.author_id).toString())
             a(onclick="delete_img('" + img_info.id + "')" id="img_delete_" + img_info.id class="") Удалить изображение
-    a(href="/author/" + img_info.author_id class="") #{img_info.author_name}
-    each tag in img_info.tag
-        button(onclick="search_by_tag('" + tag + "')" class="tag")= tag
-        |   &thinsp;
-    p #{img_info.description}
+
+

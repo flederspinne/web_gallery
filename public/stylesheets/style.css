@@ -44,7 +44,7 @@ a:hover {
 
 .header {
     background: #212121;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
     height: 100px;
     position: fixed;
     top: 0;
@@ -53,8 +53,10 @@ a:hover {
 }
 
 .content {
+    height: 85vh;
     position: absolute;
     top: 100px;
+    width: 100%;
     z-index: 0;
 }
 
@@ -71,7 +73,7 @@ a:hover {
 
 #tag_search {
     background: #d1d4e8;
-    box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+    box-shadow: inset 0 0 3px rgba(0,0,0,0.5);
     border-radius: 2px;
     float: left;
     position: relative;
@@ -192,7 +194,7 @@ a:hover {
     height: 50vh;
     left: calc(50% - 250px);
     position: fixed;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);;
     top: 200px;
     visibility: hidden;
     width: 500px;
@@ -266,7 +268,7 @@ a:hover {
 
 .disabled, .disabled:active {
     color: #caa2a6;
-    cursor: zoom-in;
+    cursor: default;
 }
 
 .tag {
@@ -296,5 +298,22 @@ a:hover {
 }
 
 .large {
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    float: left;
     height: 85vh;
+    margin: 2vh 0 0 5%;
+    position: relative;
 }
+
+.img_info {
+    border: 1px solid teal;
+    float: left;
+    margin: 5% 3%;
+    position: relative;
+}
+
+.big {
+    font-size: 3em;
+}
+
+
