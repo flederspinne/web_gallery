@@ -42,10 +42,11 @@ block content
         span(class="label") Загружено: &thinsp;
         span(class="label gray") #{get_date_time(img_info.upload_date)}
 
-
-
-    // if (user)
+    if (user)
         if ((user._id).toString() === (img_info.author_id).toString())
-            a(onclick="delete_img('" + img_info.id + "')" id="img_delete_" + img_info.id class="") Удалить изображение
+            a(onclick="delete_img('" + img_info.id + "')" id="img_delete_" + img_info.id title="Удалить изображение" class="fa fa-trash-o fa-2x")
+
+
+
 
 
