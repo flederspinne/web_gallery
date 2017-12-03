@@ -11,6 +11,10 @@ a {
     cursor: pointer;
 }
 
+input, button {
+    font-family: "Verdana";
+}
+
 .label_tag:hover, a:hover {
     color: #9FA8DA;
 }
@@ -355,3 +359,38 @@ a {
     font-weight: normal;
 }
 
+.form {
+    height: 30vh;
+    margin: 30px auto;
+    position: relative;
+    width: 300px;
+}
+
+.input_field {
+    border: 2px solid #9FA8DA;
+    border-radius: 2px;
+    height: 42px;
+    margin: 0 0 10px 0;
+    text-align: center;
+    width: 100%;
+}
+
+.submit {
+    background: #E8EAF6;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    height: 42px;
+    margin-left: 60px;
+    position: relative;
+    width: 170px;
+}
+
+.submit:hover {
+    background: #9FA8DA;
+}
+
+.lower {
+    margin: 10vh auto 0 auto;
+    position: relative;
+}

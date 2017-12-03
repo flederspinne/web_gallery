@@ -2,16 +2,9 @@ extends layout
 
 block content
 
-    .container
-        h1 Вход
-        br
-        form(role='form', action="/login", method="post", style='max-width: 300px;')
-            .form-group
-                input.form-control(type='text', name="username", placeholder='Логин')
-            .form-group
-                input.form-control(type='password', name="password", placeholder='Пароль')
-            button.btn.btn-default(type='submit') Войти
-        | &nbsp;
+    p(class="text level_1 lower") Вход
+    form.form(role='form', action="/login", method="post", style='max-width: 300px;')
+        input.input_field(type='text', name="username", placeholder='Логин')
+        input.input_field(type='password', name="password", placeholder='Пароль')
+        button.submit(type='submit') Войти
 
-    a(href='/')
-        button(type="button") Отмена
