@@ -4,21 +4,23 @@ block content
 
     if (author_info)
         if (author_info.avatar)
-            img(src="/img/" + author_info.avatar class="avatar")
+            img(src="/img/" + author_info.avatar class="avatar float_left")
         else
-            img(src="/images/default-avatar.jpg" class="avatar")
-        br
-        |   Это страница автора #{author_info.name}
-        br
-        |   Его рейтинг: #{author_info.rating}
-        br
-        if ((user) && ((user._id).toString() !== (author_info.id).toString()))
-            if (user.subscriptions.indexOf(author_info.id) > -1)
-                p Вы подписаны на обновления #{author_info.name}
-                button#unsubscribe_button(onclick="unsubscribe('" + author_info.id + "')") Отписаться
-            else
-                button#subscribe_button(onclick="subscribe('" + author_info.id + "')") Подписаться
+            img(src="/images/default-avatar.jpg" class="avatar float_left")
+        .author_info
+            p.author #{author_info.name}
+            br
+            span.rating Рейтинг:
+            span.rating_value #{author_info.rating}
+            br
+            br
+            if ((user) && ((user._id).toString() !== (author_info.id).toString()))
+                if (user.subscriptions.indexOf(author_info.id) > -1)
+                    p Вы подписаны на обновления #{author_info.name}
+                    br
+                    button.subscribe#unsubscribe_button(onclick="unsubscribe('" + author_info.id + "')") Отписаться
+                else
+                    button.subscribe#subscribe_button(onclick="subscribe('" + author_info.id + "')") Подписаться
     if (!author_info)
         | К сожалению, этот пользователь удалил свою страницу.
-
     include feed

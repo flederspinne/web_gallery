@@ -14,6 +14,7 @@ if (user)
             img(onclick="window.location = '/my_profile'" title="Мой профиль" src="/img/" + user.avatar class="avatar small")
         else
             img(onclick="window.location = '/my_profile'" src="/images/default-avatar.jpg" class="avatar small")
+
         p(class="welcome_text" onclick="window.location = '/my_profile'") Добро пожаловать, #{user.username}!
 
     form#file_upload(name="file_upload", method="POST", action="/upload", enctype="multipart/form-data")

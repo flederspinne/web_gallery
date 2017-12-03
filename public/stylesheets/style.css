@@ -138,6 +138,8 @@ input, button {
     cursor: pointer;
     font-size: 0.8em;
     margin: 10px 0 0 0;
+    position: relative;
+    width: auto;
 }
 
 .fa-sign-out {
@@ -226,6 +228,9 @@ input, button {
 .masonry {
     column-count: 5;
     column-gap: 0;
+    float: none;
+    margin: 35vh 0 0 0;
+    position: relative;
 }
 
 /* Блоки Masonry */
@@ -306,8 +311,29 @@ input, button {
 .avatar {
     border-radius: 50%;
     height: 200px;
+    margin: 50px;
     object-fit: cover;
+    position: relative;
     width: 200px;
+}
+
+.author_info {
+    float: left;
+    margin: 70px 0 0 0;
+    position: relative;
+    width: 50%;
+}
+
+.author {
+    color: #212121;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.rating_value {
+    font-size: 2em;
+    margin-left: 10px;
+    position: relative;
 }
 
 .small {
@@ -375,7 +401,7 @@ input, button {
     width: 100%;
 }
 
-.submit {
+.submit, .subscribe {
     background: #E8EAF6;
     border: none;
     border-radius: 2px;
@@ -386,7 +412,11 @@ input, button {
     width: 170px;
 }
 
-.submit:hover {
+.subscribe {
+    margin: 0;
+}
+
+.submit:hover, .subscribe:hover {
     background: #9FA8DA;
 }
 
