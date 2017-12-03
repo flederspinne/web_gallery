@@ -48,7 +48,7 @@ var subscribe = function (author_id) {
             id: author_id
         },
         function(data) {
-            alert("Ура!");
+            location.reload();
         }
     );
 };
@@ -60,7 +60,7 @@ var unsubscribe = function (author_id) {
             id: author_id
         },
         function(data) {
-            alert("Ура!");
+            location.reload();
         }
     );
 };

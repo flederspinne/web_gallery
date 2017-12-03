@@ -1,0 +1,11 @@
+extends layout
+
+block content
+
+    if (subs_arr)
+        p Мои подписки: &nbsp;
+        each author in subs_arr
+            a(href="/author/" + author.id) #{author.username}
+            |   &#8194;
+        br
+        include feed

@@ -181,10 +181,42 @@ router.post('/upload_avatar', upload.single('file'), function(req, res){
 
 });
 
+router.get('/subscriptions', function(req, res) {
+
+    var my_subscriptions = req.user.subscriptions;
+    console.log("Мои подписки: " + JSON.stringify(my_subscriptions));
+
+    Image.find({'metadata.author_id': { $all: my_subscriptions }}).sort({ $natural: -1 })
+        .then((docs) =>{
+            var image_arr = docs.map(get_img_data);
+
+            Account.find({'_id': { $in: my_subscriptions }})
+                .then((docs) => {
+                    if (docs.length != 0) {
+                        var subs_arr = docs.map(get_subs_data);
+                        console.log("Мои подписки: " + JSON.stringify(subs_arr));
+
+                        res.render("subscriptions", {
+                            subs_arr: subs_arr,
+                            image_arr: image_arr,
+                            user : req.user
+                        });
+                    } else {
+                        res.render("subscriptions", {
+                            user : req.user
+                        });
+                    }
+
+                    console.log(docs);
+                    console.log(image_arr);
+                });
+        });
+
+});
+
 router.get('/my_profile', function(req, res) {
 
     var my_subscriptions = req.user.subscriptions;
-    console.log("LOL подписки: " + JSON.stringify(my_subscriptions));
 
     Account.find({'_id': { $in: my_subscriptions }})
         .then((docs) => {

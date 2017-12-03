@@ -21,4 +21,6 @@ if (user)
         input#input_file(type="file", name="file" onchange="show_upload()")
         include upload_file_settings
 
+    if (user.subscriptions.length > 0)
+        a(href="/subscriptions" title="Мои подписки" class="fa fa-users fa-lg")
 

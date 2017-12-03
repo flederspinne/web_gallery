@@ -154,6 +154,12 @@ a {
     margin: 38px 50px 0 0;
 }
 
+.fa-users {
+    color: #E8EAF6;
+    float: right;
+    margin: 38px 50px 0 0;
+}
+
 #file_upload {
     cursor: pointer;
     float: right;
