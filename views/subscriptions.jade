@@ -3,9 +3,13 @@ extends layout
 block content
 
     if (subs_arr)
-        p Мои подписки: &nbsp;
+        br
+        p.author &#8194;Мои подписки: &nbsp;
+        br
+        |   &#8194;&#8194;&#8194;&#8194;
         each author in subs_arr
             a(href="/author/" + author.id) #{author.username}
             |   &#8194;
+        br
         br
         include feed

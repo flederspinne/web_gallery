@@ -3,23 +3,36 @@ extends layout
 block content
 
     if (user)
-        h1 Мой профиль
         if (user.avatar)
-            img(src="/img/" + user.avatar class="avatar")
+            img(src="/img/" + user.avatar class="avatar float_left pict")
         else
-            img(src="/images/default-avatar.jpg" class="avatar")
+            img(src="/images/default-avatar.jpg" class="avatar float_left pict")
 
-        form#file_upload(name="file_upload", method="POST", action="/upload_avatar", enctype="multipart/form-data")
-            a(class="fa fa-camera-retro fa-3x")
-            input#input_file(type="file", name="file")
-            button(type="submit") Изменить аватар
+        form#file_upload.change_avatar(name="file_upload", method="POST", action="/upload_avatar", enctype="multipart/form-data")
+            a(class="fa fa-camera-retro fa-3x ava" title="Изменить аватар")
+            input#input_file(type="file", name="file" onchange="show_upload_avatar()")
+            button#upload_avatar(type="submit") Загрузить
+        script.
+            $(".avatar, .change_avatar").hover(function () {
+                $(".ava, #input_file").css("visibility", "visible");
+                $(".pict").css("filter", "brightness(0.8)");
+            }, function () {
+                $(".ava, #input_file").css("visibility", "hidden");
+                $(".pict").css("filter", "brightness(1)");
+            });
 
-        p Логин: #{user.username}
-        p Мой рейтинг: #{user.rating}
-        if (subs_arr)
-            p Мои подписки: &nbsp;
-            each author in subs_arr
-                a(href="/author/" + author.id) #{author.username}
-                |   &#8194;
-        br
-        button(onclick="delete_myself('" + user._id + "')") Удалить профиль
+        .author_info
+            p.author Я #{user.username}, и это мой профиль
+            br
+            span.rating Мой рейтинг:
+            span.rating_value #{user.rating}
+            br
+            br
+            if (subs_arr)
+                span Мои подписки: &nbsp;
+                each author in subs_arr
+                    a(href="/author/" + author.id) #{author.username}
+                    |   &#8194;
+            br
+            br
+            button.subscribe.delete_myself(onclick="delete_myself('" + user._id + "')") Удалить профиль

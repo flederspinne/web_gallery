@@ -122,6 +122,10 @@ var show_upload = function () {
     $("#img_uploading_info").text("Загрузка файла " + $("#input_file").val().replace(/C:\\fakepath\\/i, ''));
 };
 
+var show_upload_avatar = function () {
+    $("#upload_avatar").css("visibility", "visible");
+};
+
 
 module.exports.get_img_data = get_img_data;
 module.exports.get_subs_data = get_subs_data;

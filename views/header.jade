@@ -17,7 +17,7 @@ if (user)
 
         p(class="welcome_text" onclick="window.location = '/my_profile'") Добро пожаловать, #{user.username}!
 
-    form#file_upload(name="file_upload", method="POST", action="/upload", enctype="multipart/form-data")
+    form.file_upload#file_upload(name="file_upload", method="POST", action="/upload", enctype="multipart/form-data")
         a(class="fa fa-camera-retro fa-3x")
         input#input_file(type="file", name="file" onchange="show_upload()")
         include upload_file_settings

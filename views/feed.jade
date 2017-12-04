@@ -1,34 +1,9 @@
-.masonry
-    each val in image_arr
-        if (val.type !== "Avatar")
-            div(class="img_item" id="img_item_" + val.id)
-                .img_data_top
-                    span(id="likes_count_" + val.id class="likes_count") #{val.likes.length}
-                    // Если убрать одинарные кавычки из параметра, передаваемого в post_like, ничего работать не будет,
-                        потому что id у нас строка!
-                        Со сравнением id у нас всегда проблемы, если это mongoose'овский ObjectId.
-                        Всегда приводить их к единому типу вручную перед сравнением!
-                    if ((user) && (val.likes.indexOf((user._id).toString()) === -1) && ((user._id).toString() !== (val.author_id).toString()))
-                        span(onclick="like('" + val.id + "', '" + val.author_id + "')" class="like_button") &#x2764;
-                    else
-                        span(class="like_button disabled") &#x2764;
-                    if (user)
-                        if ((user._id).toString() === (val.author_id).toString())
-                            a(onclick="delete_img('" + val.id + "')" id="img_delete_" + val.id class="delete") &#x2716;
-
-                img(onclick="get_large_img('" + val.id + "')" src="/img/" + val.id class="img")
-
-                .img_data_bottom
-                    a(href="/author/" + val.author_id class="author_name") #{val.author_name}
-                    br
-                    - var index = 0
-                    each tag in val.tag
-                        if(index < 3)
-                            button(onclick="search_by_tag('" + tag + "')" class="tag")= tag
-                            |   &thinsp;
-                        - index++
-                        if (index === 3)
-                            span(class="light_text") ...
+if (author_info)
+    .masonry.author_margin
+        include masonry
+else
+    .masonry
+        include masonry
 
 script.
     $(document).ready(function () {

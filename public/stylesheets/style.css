@@ -166,7 +166,7 @@ input, button {
     margin: 38px 50px 0 0;
 }
 
-#file_upload {
+.file_upload {
     cursor: pointer;
     float: right;
     margin: 22px 50px 0 0;
@@ -229,8 +229,11 @@ input, button {
     column-count: 5;
     column-gap: 0;
     float: none;
-    margin: 35vh 0 0 0;
     position: relative;
+}
+
+.author_margin {
+    margin: 35vh 0 0 0;
 }
 
 /* Блоки Masonry */
@@ -315,6 +318,25 @@ input, button {
     object-fit: cover;
     position: relative;
     width: 200px;
+}
+
+.change_avatar {
+    cursor: pointer;
+    float: left;
+    margin: 126px 126px;
+    position: absolute;
+    visibility: hidden;
+    width: 54px;
+    z-index: 300;
+}
+
+#upload_avatar {
+    background: #E8EAF6;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    height: 24px;
+    margin: 0 0 0 -15px;
 }
 
 .author_info {
@@ -416,11 +438,19 @@ input, button {
     margin: 0;
 }
 
-.submit:hover, .subscribe:hover {
+.submit:hover, .subscribe:hover, #upload_avatar:hover {
     background: #9FA8DA;
 }
 
 .lower {
     margin: 10vh auto 0 auto;
     position: relative;
+}
+
+.delete_myself {
+    background: #e57373;
+}
+
+.delete_myself:hover {
+    background: #EF5350;
 }
