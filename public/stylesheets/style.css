@@ -454,3 +454,17 @@ input, button {
 .delete_myself:hover {
     background: #EF5350;
 }
+
+#input_file_tag, #img_description {
+    margin-left: 75px;
+    position: relative;
+    width: 350px;
+}
+
+#button_file_submit {
+    margin-left: 165px;
+}
+
+.center {
+    text-align: center;
+}

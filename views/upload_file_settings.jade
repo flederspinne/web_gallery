@@ -1,8 +1,17 @@
 #upload_file_settings
-    .window_header
-        p(id="img_uploading_info" class="text level_1") Загрузка файла
-    p(class="text level_2") Пожалуйста, присвойте фотографии хотя бы один тег:
-    input#input_file_tag(type="text", name="tag")
-    p(class="text level_2") Введите описание фотографии:
-    input(id="img_description" name="description" class="")
-    button#button_file_submit(type="submit") Загрузить
+    br
+    p(id="img_uploading_info" class="text level_1") Загрузка файла
+    br
+    br
+    br
+    p.center(class="text level_2") Пожалуйста, присвойте фотографии хотя бы один тег:
+    input#input_file_tag.input_field(type="text", name="tag" placeholder="Введите теги через запятую")
+    br
+    br
+    p.center(class="text level_2") Введите описание фотографии:
+    input#img_description.input_field(name="description" class="")
+    br
+    br
+    br
+    br
+    button#button_file_submit.submit(type="submit") Загрузить
