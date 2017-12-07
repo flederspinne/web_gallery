@@ -68,10 +68,10 @@ router.get('/login', function(req, res) {
 });
 
 // Вход в аккаунт
-router.post('/login', passport.authenticate('local'), function(req, res) {
-    console.log("Пытаемся войти: " + JSON.stringify(req.body));
-    res.redirect('/');
-});
+router.post('/login', passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login'
+}));
 
 router.get('/logout', function(req, res) {
     req.logout();
