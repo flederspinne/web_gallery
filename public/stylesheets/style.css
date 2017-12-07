@@ -178,7 +178,7 @@ input, button {
 .fa-camera-retro {
     color: #E8EAF6;
     cursor: pointer;
-    z-index: 200;
+    z-index: 350;
 }
 
 .fa-camera-retro:hover {
@@ -269,7 +269,7 @@ input, button {
 }
 
 .img_data_bottom {
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
     height: auto;
     position: relative;
     visibility: hidden;
@@ -307,8 +307,13 @@ input, button {
 }
 
 .delete {
+    color: #e57373;
     margin-left: 78%;
     position: relative;
+}
+
+.delete:hover {
+    color: #912e2e;
 }
 
 .avatar {
@@ -370,8 +375,8 @@ input, button {
 .large {
     box-shadow: 0 0 5px rgba(0,0,0,0.5);
     float: left;
-    height: 85vh;
-    margin: 2vh 0 0 5%;
+    height: 80vh;
+    margin: 5vh 0 0 5%;
     position: relative;
 }
 

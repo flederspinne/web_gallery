@@ -15,7 +15,7 @@ if (user)
         else
             img(onclick="window.location = '/my_profile'" src="/images/default-avatar.jpg" class="avatar small")
 
-        p(class="welcome_text" onclick="window.location = '/my_profile'") Добро пожаловать, #{user.username}!
+        p(class="welcome_text" onclick="window.location = '/my_profile'") Добро пожаловать, #{user.username}
 
     form.file_upload#file_upload(name="file_upload", method="POST", action="/upload", enctype="multipart/form-data")
         a(class="fa fa-camera-retro fa-3x")

@@ -184,11 +184,18 @@ router.post('/upload_avatar', upload.single('file'), function(req, res){
 router.get('/subscriptions', function(req, res) {
 
     var my_subscriptions = req.user.subscriptions;
-    console.log("Мои подписки: " + JSON.stringify(my_subscriptions));
+    var id_subscriptions = my_subscriptions.map(function (subscription) {
+        var item = new ObjectId(subscription);
+        console.log("Элемент массива = " + item);
+        return item;
+    });
+    console.log("Подписки: " + JSON.stringify(id_subscriptions));
 
-    Image.find({'metadata.author_id': { $all: my_subscriptions }}).sort({ $natural: -1 })
+    Image.find({'metadata.author_id': { $in: id_subscriptions }}).sort({ $natural: -1 })
         .then((docs) =>{
             var image_arr = docs.map(get_img_data);
+            console.log("Изображения: " + docs);
+            console.log(image_arr);
 
             Account.find({'_id': { $in: my_subscriptions }})
                 .then((docs) => {
@@ -208,7 +215,6 @@ router.get('/subscriptions', function(req, res) {
                     }
 
                     console.log(docs);
-                    console.log(image_arr);
                 });
         });
 
